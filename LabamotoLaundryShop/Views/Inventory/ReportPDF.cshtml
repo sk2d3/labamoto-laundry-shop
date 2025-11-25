@@ -1,0 +1,128 @@
+﻿@model LabamotoLaundryShop.Models.InventoryReportVM
+@{
+    Layout = null; /* Rotativa PDF must not use your normal layout */
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Inventory PDF Report</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            margin: 0 0 10px 0;
+            padding: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table, th, td {
+            border: 1px solid #555;
+        }
+
+        th {
+            background: #eee;
+            padding: 6px;
+        }
+
+        td {
+            padding: 6px;
+        }
+
+        .summary-box {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #777;
+        }
+
+        .signature-box {
+            margin-top: 50px;
+            text-align: left;
+        }
+
+        .sig-line {
+            width: 250px;
+            border-bottom: 1px solid #000;
+            margin-bottom: 4px;
+        }
+
+        .sig-label {
+            font-size: 12px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Labamoto Laundry Shop</h1>
+    <h2>Inventory Report</h2>
+
+    <div class="summary-box">
+        <p><strong>Report Type:</strong> @Model.SelectedType.ToUpper()</p>
+        <p><strong>Category:</strong> @(string.IsNullOrEmpty(Model.SelectedCategory) ? "All" : Model.SelectedCategory)</p>
+        <p><strong>Period:</strong> Last @Model.SelectedPeriod days</p>
+        <p><strong>Generated On:</strong> @DateTime.Now.ToString("MMM dd, yyyy hh:mm tt")</p>
+    </div>
+
+    @if (Model.SelectedType == "summary")
+    {
+        <h3>Summary Only</h3>
+        <p>Total Items: @Model.Items.Count()</p>
+        <p>Low Stock: @Model.Items.Count(x => x.Status == "Low")</p>
+        <p>Out of Stock: @Model.Items.Count(x => x.Status == "OUT")</p>
+    }
+    else
+    {
+        <h3>Full Inventory List</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Category</th>
+                    <th>Current Stock</th>
+                    <th>Min Level</th>
+                    <th>Status</th>
+                    <th>Unit Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@item.ItemName</td>
+                        <td>@item.Category</td>
+                        <td>@item.CurrentStock</td>
+                        <td>@item.MinLevel</td>
+                        <td>@item.Status</td>
+                        <td>₱@item.UnitCost</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <!-- Signature Section -->
+    <div class="signature-box">
+        <div class="sig-line"></div>
+        <div class="sig-label">Authorized Signature</div>
+
+        <br /><br />
+
+        <div class="sig-line"></div>
+        <div class="sig-label">Reviewed By</div>
+    </div>
+
+</body>
+</html>

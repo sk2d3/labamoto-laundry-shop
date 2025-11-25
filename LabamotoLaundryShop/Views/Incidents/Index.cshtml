@@ -1,0 +1,508 @@
+﻿@{
+    ViewBag.Title = "Incident Reports";
+    Layout = "~/Views/Shared/_OwnerLayout.cshtml";
+    var incidents = ViewBag.Incidents as List<LabamotoLaundryShop.Models.Incident> ?? new List<LabamotoLaundryShop.Models.Incident>();
+    var startDate = ViewBag.StartDate ?? DateTime.Today.AddDays(-30).ToString("yyyy-MM-dd");
+    var endDate = ViewBag.EndDate ?? DateTime.Today.ToString("yyyy-MM-dd");
+    var statusFilter = ViewBag.SelectedStatus ?? "All";
+    var severityFilter = ViewBag.SelectedSeverity ?? "All";
+}
+
+<style>
+    .incident-container {
+        max-width: 1250px;
+        margin: 20px auto;
+        padding: 30px 40px;
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+        .incident-container h2 {
+            color: #0d6efd;
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 25px;
+        }
+
+    .section-card {
+        background: #ffffff;
+        border: 1px solid #e0e7ff;
+        border-radius: 10px;
+        padding: 25px 30px;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+        .section-card h4, .section-card h5 {
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 15px;
+        }
+
+    .stats-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+        .stats-cards .card {
+            flex: 1;
+            min-width: 180px;
+            padding: 25px;
+            border: none;
+            text-align: center;
+            border-radius: 12px;
+            background: #ffffff;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: 0.2s;
+        }
+
+            .stats-cards .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            }
+
+            .stats-cards .card h5 {
+                font-size: 16px;
+                color: #0B64E5;
+                margin-bottom: 8px;
+            }
+
+            .stats-cards .card p {
+                font-size: 26px;
+                color: #000000;
+                margin: 0;
+            }
+
+    .quick-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+        border: none;
+    }
+
+        .quick-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+</style>
+
+<div class="incident-container">
+
+    <!-- Back & Page Title -->
+    <a href="@Url.Action("Dashboard", "Owner")" class="btn btn-outline-secondary mb-3">← Back</a>
+    <h2>📝 Lost or Damaged Laundry Reports</h2>
+
+    <!-- Filters & Log Incident -->
+    <div class="section-card">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <button class="btn btn-primary shadow-sm -mb-4" data-bs-toggle="modal" data-bs-target="#logIncidentModal">+ Log New Incident</button>
+            <form method="get" action="" class="row g-2">
+                <div class="col-md-3 mb-4">
+                    <label>Status:</label>
+                    <select name="status" class="form-select">
+                        <option value="All" @(ViewBag.SelectedStatus == "All" ? "selected" : "")>All</option>
+                        <option value="Open" @(ViewBag.SelectedStatus == "Open" ? "selected" : "")>Open</option>
+                        <option value="In Progress" @(ViewBag.SelectedStatus == "In Progress" ? "selected" : "")>In Progress</option>
+                        <option value="Resolved" @(ViewBag.SelectedStatus == "Resolved" ? "selected" : "")>Resolved</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label>Severity:</label>
+                    <select name="severity" class="form-select">
+                        <option value="All" @(ViewBag.SelectedSeverity == "All" ? "selected" : "")>All</option>
+                        <option value="Low" @(ViewBag.SelectedSeverity == "Low" ? "selected" : "")>Low</option>
+                        <option value="Medium" @(ViewBag.SelectedSeverity == "Medium" ? "selected" : "")>Medium</option>
+                        <option value="High" @(ViewBag.SelectedSeverity == "High" ? "selected" : "")>High</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label>From:</label>
+                    <input type="date" name="startDate" class="form-control" value="@ViewBag.StartDate" />
+                </div>
+                <div class="col-md-2">
+                    <label>To:</label>
+                    <input type="date" name="endDate" class="form-control" value="@ViewBag.EndDate" />
+                </div>
+                <div class="col-md-2 d-flex align-items-end mb-4">
+                    <button type="submit" class="btn btn-primary w-100">Apply Filter</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-cards">
+            <div class="card">
+                <h5>Open Incidents</h5>
+                <p>@incidents.Count(i => i.Status == "Open")</p>
+            </div>
+            <div class="card">
+                <h5>In Progress</h5>
+                <p>@incidents.Count(i => i.Status == "In Progress")</p>
+            </div>
+            <div class="card">
+                <h5>Resolved (30 days)</h5>
+                <p>@incidents.Count(i => i.Status == "Resolved" && i.ReportDate >= DateTime.Today.AddDays(-30))</p>
+            </div>
+            <div class="card">
+                <h5>Total Compensation</h5>
+                <p>₱@incidents.Where(i => i.Status == "Resolved").Sum(i => i.Compensation).ToString("N2")</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Incident Table -->
+    <div class="section-card">
+        <h4>Incident Reports</h4>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Issue Type</th>
+                        <th>Severity</th>
+                        <th>Reported By</th>
+                        <th>Status</th>
+                        <th>Resolution</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var incident in incidents.OrderByDescending(i => i.ReportDate))
+                    {
+                        <tr data-incident-id="@incident.IncidentID">
+                            <td>@incident.ReportDate.ToString("MMM d, yyyy")</td>
+                            <td>#@incident.OrderID</td>
+                            <td>@incident.CustomerName</td>
+                            <td>@incident.IncidentType</td>
+                            <td>@incident.Severity</td>
+                            <td>@incident.ReportedByStaffID</td>
+                            <td>@incident.Status</td>
+                            <td>@(string.IsNullOrEmpty(incident.Resolution) ? "-" : incident.Resolution)</td>
+                            <td>
+                                @if (incident.Status != "Resolved")
+                                {
+                                    <button class="btn btn-primary btn-sm resolve-btn"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#resolveModal"
+                                            data-id="@incident.IncidentID">
+                                        Resolve
+                                    </button>
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0);"
+                                       class="btn btn-outline-primary btn-sm view-btn"
+                                       data-id="@incident.IncidentID">
+                                        View
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Resolve Incident Modal -->
+<div class="modal fade" id="resolveModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content shadow rounded-4 border-0">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">⚠️ Resolve Incident</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <h5 class="fw-bold mb-3">Incident Details</h5>
+
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <label class="fw-semibold">Order ID:</label>
+                        <p id="mOrderId" class="mb-0"></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="fw-semibold">Customer:</label>
+                        <p id="mCustomer" class="mb-0"></p>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <label class="fw-semibold">Date Reported:</label>
+                        <p id="mReportedDate" class="mb-0"></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="fw-semibold">Reported By:</label>
+                        <p id="mReportedBy" class="mb-0"></p>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <label class="fw-semibold">Incident Type:</label>
+                        <p id="mIncidentType" class="mb-0"></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="fw-semibold">Severity Level:</label>
+                        <p id="mSeverity" class="mb-0"></p>
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <label class="fw-semibold">Issue Summary:</label>
+                    <p id="mSummary" class="mb-0"></p>
+                </div>
+
+                <div class="mb-3">
+                    <label class="fw-semibold">Detailed Description:</label>
+                    <p id="mDetails" class="mb-0"></p>
+                </div>
+
+                <div class="mb-3">
+                    <label class="fw-semibold">Estimated Item Value:</label>
+                    <p id="mValue" class="mb-0">₱0.00</p>
+                </div>
+
+                <hr>
+
+                <h5 class="fw-bold mb-3">Provide Resolution</h5>
+
+                <form id="resolveForm">
+                    <input type="hidden" id="incidentId" name="IncidentID" />
+
+                    <div class="mb-3">
+                        <label class="fw-semibold">Resolution Type *</label>
+                        <select class="form-select" name="ResolutionType" required>
+                            <option value="">-- Select Resolution --</option>
+                            <option>Refund</option>
+                            <option>Remake Service</option>
+                            <option>Discount</option>
+                            <option>Apology Only</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-semibold">Compensation Amount (₱)</label>
+                        <input type="number" class="form-control" name="CompensationAmount" value="0.00">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-semibold">Resolution Details *</label>
+                        <textarea class="form-control" rows="3" name="ResolutionDetails" required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-semibold">Action Taken</label>
+                        <textarea class="form-control" rows="2" name="ActionTaken"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-semibold">Customer Satisfaction</label><br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="Satisfaction" value="Satisfied">
+                            <label class="form-check-label">😊 Satisfied</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="Satisfaction" value="Neutral">
+                            <label class="form-check-label">😐 Neutral</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="Satisfaction" value="Unsatisfied">
+                            <label class="form-check-label">😞 Unsatisfied</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-semibold">Internal Notes (Optional)</label>
+                        <textarea class="form-control" name="InternalNotes"></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-info" id="btnInProgress" data-status="In Progress">Mark as In Progress</button>
+                <button class="btn btn-success" id="btnResolve" data-status="Resolved">Mark as Resolved</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--View Modal-->
+<div class="modal fade" id="viewIncidentModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content shadow-lg rounded-3">
+
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">✅ View Resolved Incident</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body" id="viewIncidentBody">
+                <!-- AJAX loads _ViewIncidentModal.cshtml here -->
+            </div>
+
+            <div class="modal-footer bg-light">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Log Incident Modal -->
+<div class="modal fade" id="logIncidentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <form method="post" action="@Url.Action("Create", "Incidents")">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Log New Incident</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="OrderID" class="form-label">Order:</label>
+                        <select class="form-select" id="OrderID" name="OrderID" required>
+                            <option value="">-- Select Order --</option>
+                            @foreach (var order in ViewBag.Orders as List<LabamotoLaundryShop.Models.Order>)
+                            {
+                                <option value="@order.OrderID">#@order.OrderNumber - Customer @order.CustomerID</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="CustomerName" class="form-label">Customer to Notify:</label>
+                        <input type="text" class="form-control" id="CustomerName" name="CustomerName" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="IssueDescription" class="form-label">Issue Description:</label>
+                        <textarea class="form-control" id="IssueDescription" name="IssueDescription" rows="4" required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="ProposedResolution" class="form-label">Proposed Resolution (e.g., Compensation):</label>
+                        <input type="text" class="form-control" id="ProposedResolution" name="ProposedResolution">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Incident</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Open modal and load incident details
+    document.querySelectorAll('.resolve-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const incidentId = this.dataset.id;
+
+            // Fetch incident details from server
+            fetch('/Incidents/GetIncident/' + incidentId)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById("incidentId").value = data.incidentId;
+                    document.getElementById("mOrderId").innerText = "#" + data.orderId;
+                    document.getElementById("mCustomer").innerText = data.customerName;
+                    document.getElementById("mReportedDate").innerText = new Date(data.reportDate).toLocaleDateString();
+                    document.getElementById("mReportedBy").innerText = data.staffName;
+                    document.getElementById("mIncidentType").innerText = data.incidentType;
+                    document.getElementById("mSeverity").innerText = data.severity;
+                    document.getElementById("mSummary").innerText = data.summary;
+                    document.getElementById("mDetails").innerText = data.description;
+                    document.getElementById("mValue").innerText = "₱" + parseFloat(data.value).toLocaleString('en-PH', { minimumFractionDigits: 2 });
+                });
+        });
+    });
+
+    // Function to update status
+    function updateIncidentStatus(status) {
+        const incidentId = document.getElementById("incidentId").value;
+        const form = document.getElementById("resolveForm");
+        const formData = new FormData(form);
+
+        // Include status and Compensation properly
+        formData.append("Status", status);
+        formData.append("Compensation", form.querySelector("[name='CompensationAmount']").value);
+
+        fetch('/Incidents/UpdateStatus', {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    // Update table row dynamically
+                    const row = document.querySelector(`tr[data-incident-id='${data.incidentId}']`);
+                    row.cells[6].innerText = data.status;
+
+                    // If resolved, change button to View
+                    if (data.status === "Resolved") {
+                        row.cells[8].innerHTML = `<a href="javascript:void(0);" class="btn btn-outline-primary btn-sm view-btn" data-id="${data.incidentId}">View</a>`;
+                    }
+
+                    // Optionally update stats cards
+                    const stats = document.querySelectorAll(".stats-cards p");
+                    if (status === "In Progress") {
+                        stats[1].innerText = parseInt(stats[1].innerText) + 1; // In Progress count
+                        stats[0].innerText = parseInt(stats[0].innerText) - 1; // Open count
+                    } else if (status === "Resolved") {
+                        stats[2].innerText = parseInt(stats[2].innerText) + 1; // Resolved count
+                        stats[1].innerText = parseInt(stats[1].innerText) - 1; // In Progress count
+                        stats[3].innerText = "₱" + parseFloat(formData.get("Compensation")).toLocaleString('en-PH', { minimumFractionDigits: 2 });
+                    }
+
+                    // Close modal
+                    const modalEl = document.getElementById('resolveModal');
+                    bootstrap.Modal.getInstance(modalEl).hide();
+                } else {
+                    alert("Failed to update incident.");
+                }
+            });
+    }
+
+    // Attach buttons
+    document.getElementById("btnInProgress").addEventListener("click", function () {
+        updateIncidentStatus(this.dataset.status);
+    });
+
+    document.getElementById("btnResolve").addEventListener("click", function () {
+        updateIncidentStatus(this.dataset.status);
+    });
+</script>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const viewButtons = document.querySelectorAll(".view-btn");
+
+        viewButtons.forEach(btn => {
+            btn.addEventListener("click", function () {
+                const id = this.getAttribute("data-id");
+
+                fetch('/Incidents/View/' + id)
+                    .then(res => res.text())
+                    .then(html => {
+                        document.getElementById('viewIncidentBody').innerHTML = html;
+                        const viewModalEl = document.getElementById('viewIncidentModal');
+                        const viewModal = new bootstrap.Modal(viewModalEl);
+                        viewModal.show();
+                    });
+            });
+        });
+    });
+</script>
+

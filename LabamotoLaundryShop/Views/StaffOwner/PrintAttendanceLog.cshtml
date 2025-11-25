@@ -1,0 +1,82 @@
+﻿@model List<LabamotoLaundryShop.Models.AttendanceRecord>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 5px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #0d6efd;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h2 style="margin: 0;">Attendance Log</h2>
+        <a href="@Url.Action("AttendanceLog", "StaffOwner")" class="btn btn-danger btn-sm" style="font-size: 30px; text-decoration: none; color: red; border: 1px solid red; padding: 4px; border-radius: 4px;">&times;</a>
+    </div>
+
+    @if (Request.QueryString["startDate"] != null || Request.QueryString["endDate"] != null || !string.IsNullOrEmpty(Request.QueryString["staffName"]) || !string.IsNullOrEmpty(Request.QueryString["status"]))
+    {
+        <p>
+            @if (Request.QueryString["startDate"] != null)
+            {<span>From: @Request.QueryString["startDate"] </span>}
+            @if (Request.QueryString["endDate"] != null)
+            {<span>To: @Request.QueryString["endDate"] </span>}
+            @if (!string.IsNullOrEmpty(Request.QueryString["staffName"]))
+            {<span>Staff: @Request.QueryString["staffName"] </span>}
+            @if (!string.IsNullOrEmpty(Request.QueryString["status"]))
+            {<span>Status: @Request.QueryString["status"] </span>}
+        </p>
+    }
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Staff Name</th>
+                <th>Check In</th>
+                <th>Check Out</th>
+                <th>Hours Worked</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var record in Model)
+            {
+                var hoursWorked = record.TimeOut.HasValue ? (record.TimeOut.Value - record.TimeIn).TotalHours : 0;
+                <tr>
+                    <td>@record.TimeIn.ToString("MMM d, yyyy")</td>
+                    <td>@record.Name</td>
+                    <td>@record.TimeIn.ToString("h:mm tt")</td>
+                    <td>@(record.TimeOut?.ToString("h:mm tt") ?? "-")</td>
+                    <td>@(hoursWorked > 0 ? hoursWorked.ToString("0.##") : "-")</td>
+                    <td>@record.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <script>
+        window.print(); // automatically trigger print dialog
+    </script>
+</body>
+</html>

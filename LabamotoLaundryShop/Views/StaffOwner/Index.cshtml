@@ -1,0 +1,518 @@
+﻿@model LabamotoLaundryShop.Models.StaffViewModel
+
+@{
+    ViewBag.Title = "Staff Management";
+    Layout = "~/Views/Shared/_OwnerLayout.cshtml";
+}
+
+<style>
+    .staff-container {
+        max-width: 1250px;
+        margin: 20px auto;
+        padding: 30px 40px;
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+        .staff-container h2 {
+            color: #0d6efd;
+            font-weight: 600;
+            margin-bottom: -15px;
+            font-size: 25px;
+        }
+
+    .section-card {
+        background: white;
+        border: 1px solid #e0e7ff;
+        border-radius: 10px;
+        padding: 30px 40px;
+        margin-bottom: 20px;
+    }
+
+        .section-card h5 {
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 10px;
+        }
+
+    .quick-links {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+    }
+
+        .quick-links .card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: 0.2s;
+        }
+
+            .quick-links .card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+            }
+
+            .quick-links .card h6 {
+                color: #000;
+                font-weight: 600;
+                margin-top: 10px;
+            }
+
+    .stats-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+        .stats-cards .card {
+            flex: 1;
+            min-width: 180px;
+            padding: 25px;
+            border: none;
+            text-align: center;
+            border-radius: 12px;
+            background: #ffffff;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: 0.2s;
+        }
+
+            .stats-cards .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            }
+
+            .stats-cards .card h5 {
+                font-size: 16px;
+                color: #0B64E5;
+                margin-bottom: 8px;
+            }
+
+            .stats-cards .card p {
+                font-size: 26px;
+                color: #000000;
+                margin: 0;
+            }
+            /* Hover bounce effect */
+    .quick-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+        border: none;
+    }
+
+                .quick-card:hover {
+                    transform: scale(1.05);
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+                }
+</style>
+
+<div class="staff-container">
+    <a href="@Url.Action("Dashboard", "Owner")" class="btn btn-outline-secondary mb-3">← Back</a>
+
+
+    <!-- Add Staff -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>🏢 Staff & Employee Management</h2>
+        <button class="btn btn-primary shadow-sm align-items-end" data-bs-toggle="modal" data-bs-target="#addStaffModal">+ Add New Staff</button>
+    </div>
+
+    <!-- Quick Access -->
+    <div class="row g-3 mb-4">
+        <!-- View Schedules -->
+        <div class="col-12 col-sm-6 col-md-4">
+            <a href="@Url.Action("ViewSchedules", "StaffOwner")" class="card quick-card text-center p-3 text-decoration-none h-100">
+                <div style="font-size: 2.5rem;">📅</div>
+                <h6 class="mt-2">View Schedules</h6>
+                <p class="text-muted mb-0">Manage shifts</p>
+            </a>
+        </div>
+
+        <!-- Attendance Log -->
+        <div class="col-12 col-sm-6 col-md-4">
+            <a href="@Url.Action("AttendanceLog", "StaffOwner")" class="card quick-card text-center p-3 text-decoration-none h-100">
+                <div style="font-size: 2.5rem;">🕒</div>
+                <h6 class="mt-2">Attendance Log</h6>
+                <p class="text-muted mb-0">Track time</p>
+            </a>
+        </div>
+
+        <!-- Payroll -->
+        <div class="col-12 col-sm-6 col-md-4">
+            <a href="@Url.Action("Payroll", "StaffOwner")" class="card quick-card text-center p-3 text-decoration-none h-100">
+                <div style="font-size: 2.5rem;">💰</div>
+                <h6 class="mt-2">Payroll</h6>
+                <p class="text-muted mb-0">Process salaries</p>
+            </a>
+        </div>
+    </div>
+
+    <!-- Active Staff -->
+    <div class="section-card">
+        <h5>Active Staff Members (@Model.TotalStaff)</h5>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Contact</th>
+                        <th>Shift</th>
+                        <th>Status</th>
+                        <th>Access Level</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var staff in Model.StaffList)
+                    {
+                        <tr>
+                            <td>@staff.EmployeeID</td>
+                            <td>@staff.FullName</td>
+                            <td>@staff.Role</td>
+                            <td>@staff.ContactNumber</td>
+                            <td>@staff.Shift</td>
+                            <td>
+                                @if (staff.Status == "On Duty")
+                                {<span class="text-success">@staff.Status</span> }
+                            else if (staff.Status == "On Break")
+                            { <span class="text-warning">@staff.Status</span> }
+                        else
+                        { <span class="text-danger">@staff.Status</span>}
+                            </td>
+                            <td>@staff.AccessLevel</td>
+                            <td>
+                                <button class="btn btn-outline-warning btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#editStaffModal-@staff.StaffID">
+                                    ✏️ Edit
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @foreach (var staff in Model.StaffList)
+    {
+        <!-- Edit Staff Modal -->
+        <div class="modal fade" id="editStaffModal-@staff.StaffID" tabindex="-1" aria-labelledby="editStaffModalLabel-@staff.StaffID" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="post" action="@Url.Action("EditStaff", "StaffOwner")">
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title" id="editStaffModalLabel-@staff.StaffID">Edit Staff Member</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Hidden PK for updating -->
+                            <input type="hidden" name="StaffID" value="@staff.StaffID" />
+
+                            <!-- Employee ID (readonly string) -->
+                            <div class="mb-3">
+                                <label class="form-label">Employee ID</label>
+                                <input type="text" class="form-control" value="@staff.EmployeeID" readonly />
+                            </div>
+
+                            <!-- Full Name -->
+                            <div class="mb-3">
+                                <label class="form-label">Full Name *</label>
+                                <input type="text" class="form-control" name="FullName" value="@staff.FullName" required />
+                            </div>
+
+                            <!-- Role -->
+                            <div class="mb-3">
+                                <label class="form-label">Role *</label>
+                                <select class="form-select" name="Role" required>
+                                    <option value="">Select Role</option>
+                                    <option value="Manager" @(staff.Role == "Manager" ? "selected" : "")>Manager</option>
+                                    <option value="Washer" @(staff.Role == "Washer" ? "selected" : "")>Washer</option>
+                                    <option value="Folder" @(staff.Role == "Folder" ? "selected" : "")>Folder</option>
+                                    <option value="Delivery" @(staff.Role == "Delivery" ? "selected" : "")>Delivery</option>
+                                    <option value="Cashier" @(staff.Role == "Cashier" ? "selected" : "")>Cashier</option>
+                                </select>
+                            </div>
+
+                            <!-- Contact Number -->
+                            <div class="mb-3">
+                                <label class="form-label">Contact Number *</label>
+                                <input type="text" class="form-control" name="ContactNumber" value="@staff.ContactNumber" required />
+                            </div>
+
+                            <!-- Shift -->
+                            <div class="mb-3">
+                                <label class="form-label">Shift Assignment</label>
+                                <select class="form-select" name="Shift">
+                                    <option value="Day" @(staff.Shift == "Day" ? "selected" : "")>Day</option>
+                                    <option value="Night" @(staff.Shift == "Night" ? "selected" : "")>Night</option>
+                                </select>
+                            </div>
+
+                            <!-- Access Level -->
+                            <div class="mb-3">
+                                <label class="form-label">Access Level</label>
+                                <select class="form-select" name="AccessLevel">
+                                    <option value="Admin" @(staff.AccessLevel == "Admin" ? "selected" : "")>Admin</option>
+                                    <option value="Staff" @(staff.AccessLevel == "Staff" ? "selected" : "")>Staff</option>
+                                </select>
+                            </div>
+
+                            <!-- Current Status (readonly) -->
+                            <div class="mb-3">
+                                <label class="form-label">Current Status</label>
+                                <input type="text" class="form-control" value="@staff.Status" readonly />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="@Url.Action("AttendanceHistory", "StaffOwner", new { id = staff.StaffID })" class="btn btn-outline-secondary">View Attendance History</a>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Attendance
+    <div class="section-card">
+        <h5>Today's Attendance (@DateTime.Now.ToString("MMM d, yyyy"))</h5>
+        @foreach (var record in Model.AttendanceRecords)
+        {
+            <p><strong>@record.Name</strong> - @record.Role<br /><small>@record.TimeIn</small></p>
+        }
+        <a href="#" class="btn btn-outline-primary btn-sm">View Full Attendance Log</a>
+    </div>
+
+
+    <div class="section-card">
+        <h5>Access Level Permissions</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <h6 class="text-primary">Admin Access:</h6>
+                <ul>
+                    <li>Full system access</li>
+                    <li>Manage pricing & settings</li>
+                    <li>View all reports</li>
+                    <li>Manage staff accounts</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h6 class="text-primary">Staff Access:</h6>
+                <ul>
+                    <li>Create & manage orders</li>
+                    <li>Update order status</li>
+                    <li>View customer info (read-only)</li>
+                    <li>No access to reports or settings</li>
+                </ul>
+            </div>
+        </div>
+    </div>-->
+
+    <div class="row">
+        <!-- Attendance Section -->
+        <div class="col-md-6">
+            <div class="section-card">
+                <h5>Today's Attendance (@DateTime.Now.ToString("MMM d, yyyy"))</h5>
+                @foreach (var record in Model.AttendanceRecords)
+                {
+                    <p><strong>@record.Name</strong> - @record.Role<br /><small>@record.TimeIn</small></p>
+                    <a href="@Url.Action("FullAttendanceLog", "StaffOwner", new { staffId = record.StaffID })"
+                       class="btn btn-outline-primary btn-sm">
+                        View Full Attendance Log
+                    </a>
+                }
+
+            </div>
+        </div>
+
+        <!-- Access Levels Section -->
+        <div class="col-md-6">
+            <div class="section-card">
+                <h5>Access Level Permissions</h5>
+                <div class="row">
+                    <div class="col-12 mb-3">
+                        <h6 class="text-primary">Admin Access:</h6>
+                        <ul>
+                            <li>Full system access</li>
+                            <li>Manage pricing & settings</li>
+                            <li>View all reports</li>
+                            <li>Manage staff accounts</li>
+                        </ul>
+                    </div>
+                    <div class="col-12">
+                        <h6 class="text-primary">Staff Access:</h6>
+                        <ul>
+                            <li>Create & manage orders</li>
+                            <li>Update order status</li>
+                            <li>View customer info (read-only)</li>
+                            <li>No access to reports or settings</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Weekly Schedule -->
+    <div class="section-card">
+        <h5>This Week’s Schedule</h5>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Staff</th>
+                        <th>Mon</th>
+                        <th>Tue</th>
+                        <th>Wed</th>
+                        <th>Thu</th>
+                        <th>Fri</th>
+                        <th>Sat</th>
+                        <th>Sun</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var sched in Model.WeeklySchedules)
+                    {
+                        <tr>
+                            <td>@sched.StaffName</td>
+                            <td>@sched.Mon</td>
+                            <td>@sched.Tue</td>
+                            <td>@sched.Wed</td>
+                            <td>@sched.Thu</td>
+                            <td>@sched.Fri</td>
+                            <td>@sched.Sat</td>
+                            <td>@sched.Sun</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-cards">
+        <div class="card"><h5>Total Staff</h5><p>@Model.TotalStaff</p></div>
+        <div class="card"><h5>On Duty</h5><p>@Model.OnDutyCount</p></div>
+        <div class="card"><h5>Off Duty</h5><p>@Model.OffDutyCount</p></div>
+        <div class="card"><h5>Admins</h5><p>@Model.AdminCount</p></div>
+    </div>
+</div>
+
+<!-- Add New Staff Member Modal -->
+<div class="modal fade" id="addStaffModal" tabindex="-1" aria-labelledby="addStaffModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <form method="post" action="@Url.Action("Create", "StaffOwner")">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="addStaffModalLabel">Add New Staff Member</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row g-3">
+
+                        <!-- Employee ID -->
+                        <div class="col-md-6">
+                            <label for="EmployeeID" class="form-label">Employee ID *</label>
+                            <input type="text" class="form-control" id="EmployeeID" name="EmployeeID" placeholder="E-001" required>
+                        </div>
+
+                        <!-- Full Name -->
+                        <div class="col-md-6">
+                            <label for="FullName" class="form-label">Full Name *</label>
+                            <input type="text" class="form-control" id="FullName" name="FullName" required>
+                        </div>
+
+                        <!-- Role -->
+                        <div class="col-md-6">
+                            <label for="Role" class="form-label">Role *</label>
+                            <select class="form-select" id="Role" name="Role" required>
+                                <option value="">Select Role</option>
+                                <option value="Manager">Manager</option>
+                                <option value="Washer">Washer</option>
+                                <option value="Folder">Folder</option>
+                                <option value="Delivery">Delivery</option>
+                                <option value="Cashier">Cashier</option>
+                            </select>
+                        </div>
+
+                        <!-- Contact Number -->
+                        <div class="col-md-6">
+                            <label for="ContactNumber" class="form-label">Contact Number *</label>
+                            <input type="text" class="form-control" id="ContactNumber" name="ContactNumber" required>
+                        </div>
+
+                        <!-- Email Address -->
+                        <div class="col-md-6">
+                            <label for="Email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="Email" name="Email">
+                        </div>
+
+                        <!-- Shift Assignment -->
+                        <div class="col-md-6">
+                            <label for="Shift" class="form-label">Shift Assignment *</label>
+                            <select class="form-select" id="Shift" name="Shift" required>
+                                <option value="">Select Shift</option>
+                                <option value="Day">Day</option>
+                                <option value="Night">Night</option>
+                            </select>
+                        </div>
+
+                        <!-- Access Level -->
+                        <div class="col-md-6">
+                            <label for="AccessLevel" class="form-label">Access Level *</label>
+                            <select class="form-select" id="AccessLevel" name="AccessLevel" required>
+                                <option value="">Select Access Level</option>
+                                <option value="Admin">Admin</option>
+                                <option value="Staff">Staff</option>
+                            </select>
+                        </div>
+
+                        <!-- Hourly/Daily Rate -->
+                        <div class="col-md-6">
+                            <label for="Rate" class="form-label">Hourly/Daily Rate</label>
+                            <input type="number" step="0.01" class="form-control" id="Rate" name="Rate" placeholder="₱">
+                        </div>
+
+                        <!-- Address -->
+                        <div class="col-12">
+                            <label for="Address" class="form-label">Address</label>
+                            <textarea class="form-control" id="Address" name="Address" rows="2"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary shadow-sm">Add Staff Member</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const editModal = document.getElementById('editStaffModal');
+    editModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        document.getElementById('editEmployeeID').value = button.getAttribute('data-id');
+        document.getElementById('editFullName').value = button.getAttribute('data-name');
+        document.getElementById('editRole').value = button.getAttribute('data-role');
+        document.getElementById('editContact').value = button.getAttribute('data-contact');
+        document.getElementById('editStatus').value = button.getAttribute('data-status');
+
+        const shift = button.getAttribute('data-shift');
+        document.getElementById('shiftDay').checked = shift === "Day";
+        document.getElementById('shiftNight').checked = shift === "Night";
+
+        const access = button.getAttribute('data-access');
+        document.getElementById('accessAdmin').checked = access === "Admin";
+        document.getElementById('accessStaff').checked = access === "Staff";
+    });
+</script>

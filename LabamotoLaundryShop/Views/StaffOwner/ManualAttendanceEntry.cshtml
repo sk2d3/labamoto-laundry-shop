@@ -1,0 +1,66 @@
+﻿@model LabamotoLaundryShop.Models.AttendanceRecord
+
+@{
+    ViewBag.Title = "Manual Attendance Entry";
+    Layout = "~/Views/Shared/_OwnerLayout.cshtml"; // Use your layout
+}
+
+<div class="page-title d-flex justify-content-between align-items-center">
+    <h2>➕ Manual Attendance Entry</h2>
+    <a href="@Url.Action("AttendanceLog", "StaffOwner")" class="btn btn-danger btn-sm" style="font-size: 18px;">&times;</a>
+</div>
+
+<div class="panel p-4 mt-3">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @using (Html.BeginForm("ManualAttendanceEntry", "StaffOwner", FormMethod.Post))
+    {
+        <div class="mb-3">
+            <label class="form-label">Staff Member</label>
+            <select name="StaffID" class="form-select" required>
+                <option value="">-- Select Staff --</option>
+                @foreach (var staff in ViewBag.StaffList)
+                {
+                    <option value="@staff.StaffID">@staff.FullName</option>
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Check-In Time</label>
+            <input type="datetime-local" name="TimeIn" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Check-Out Time (optional)</label>
+            <input type="datetime-local" name="TimeOut" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Status</label>
+            <select name="Status" class="form-select" required>
+                <option value="">-- Select Status --</option>
+                <option value="Present">Present</option>
+                <option value="Late">Late</option>
+                <option value="Absent">Absent</option>
+                <option value="On Leave">On Leave</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Attendance</button>
+        <a href="@Url.Action("AttendanceLog", "StaffOwner")" class="btn btn-secondary ms-2">Cancel</a>
+    }
+</div>

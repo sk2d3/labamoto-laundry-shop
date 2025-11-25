@@ -1,0 +1,293 @@
+﻿@model LabamotoLaundryShop.ViewModels.OwnerDashboardViewModel
+@{
+    ViewBag.Title = "Owner Dashboard - Business Overview";
+    Layout = "~/Views/Shared/_OwnerLayout.cshtml";
+}
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        background: #f6f8fb;
+        color: #333;
+    }
+
+
+
+    /* --- FORM WRAPPER --- */
+    .dashboard-form {
+        max-width: 1250px;
+        margin: 10px auto;
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 30px 40px;
+        box-shadow: 0 4px 3px rgba(0,0,0,0.08);
+    }
+
+    .dashboard-form h2 {
+        color: #0d6efd;
+        font-weight: 600;
+        margin-bottom: 20px;
+        font-size: 25px;
+    }
+
+
+    h2 {
+        color: #475569;
+        font-weight: 600;
+        margin-bottom: 10px;
+        font-size: 25px;
+    }
+
+    h4.section-title {
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #475569;
+    }
+
+    /* --- STAT CARDS --- */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .stat-card {
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: transform 0.2s ease;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card h5 {
+            font-size: 16px;
+            color: #0B64E5;
+        }
+
+        .stat-card p {
+            font-size: 23px;
+            color: #475569;
+            margin: 5px 0 0;
+        }
+
+    /* --- MANAGEMENT MODULES --- */
+    .modules-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+        margin-top: 20px;
+    }
+
+    .module-card {
+        background: white;
+        border-left: 6px solid #F0EAE9;
+        border-radius: 10px;
+        padding: 20px;
+        border-top: 1px solid #e0e7ff;
+        border-right: 1px solid #e0e7ff;
+        border-bottom: 1px solid #e0e7ff;
+        transition: all 0.3s ease;
+    }
+
+        .module-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+            border-left: 6px solid #0B64E5;
+        }
+
+        .module-card h5 {
+            color: black;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .module-card p {
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+    /* --- ORDER STATUS SECTION --- */
+    .status-section {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        margin-top: 40px;
+    }
+
+    .status-list p {
+        margin: 8px 0;
+        font-size: 15px;
+    }
+
+    .status-list span {
+        font-weight: 600;
+        color: #0a3d91;
+    }
+
+    .chart-center-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .small-chart-wrapper {
+        width: 600px;
+        height: 500px; /* desired height */
+        max-width: 100%;
+        position: relative;
+        text-align: center;
+    }
+
+        .small-chart-wrapper canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+    /* --- ALERTS --- */
+    .alerts {
+        margin-top: 40px;
+    }
+
+    .alert-card {
+        background: white;
+        border-left: 6px solid #0a3d91;
+        border-radius: 10px;
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .alert-card p {
+            margin: 0;
+            font-size: 15px;
+        }
+
+        .alert-card button {
+            background: #0a3d91;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+            .alert-card button:hover {
+                background: #4eb9f7;
+            }
+</style>
+
+<!-- FORM WRAPPER AROUND MAIN DASHBOARD -->
+<form class="dashboard-form">
+    <h2>🏠 Owner Dashboard - Business Overview</h2>
+
+    <div class="stats-grid">
+        <div class="stat-card text-center">
+            <div style="font-size:2rem;">💰</div>
+            <h5>Total Income (Today)</h5>
+            <p>₱ @Model.TotalIncomeToday.ToString("N2")</p>
+        </div>
+        <div class="stat-card text-center">
+            <div style="font-size:2rem;">📅</div>
+            <h5>Total Income (Weekly)</h5>
+            <p>₱ @Model.TotalIncomeWeekly.ToString("N2")</p>
+        </div>
+        <div class="stat-card text-center">
+            <div style="font-size:2rem;">📆</div>
+            <h5>Total Income (Monthly)</h5>
+            <p>₱ @Model.TotalIncomeMonthly.ToString("N2")</p>
+        </div>
+        <div class="stat-card text-center">
+            <div style="font-size:2rem;">🧺</div>
+            <h5>Active Orders</h5>
+            <p>@Model.ActiveOrders</p>
+        </div>
+        <div class="stat-card text-center">
+            <div style="font-size:2rem;">🕓</div>
+            <h5>Today's Orders</h5>
+            <p>@Model.TodaysOrders</p>
+        </div>
+    </div>
+
+    <h4 class="section-title">Management Modules</h4>
+    <div class="modules-grid">
+        <a href="@Url.Action("Index", "Pricing")" class="text-decoration-none nav-link"><div class="module-card"><h5>⚙️ Pricing Settings</h5><p>Configure service rates & fees</p></div></a>
+        <a href="@Url.Action("Index", "Customers")" class="text-decoration-none"><div class="module-card"><h5>👥 Customer Database</h5><p>Manage customer records</p></div></a>
+        <a href="@Url.Action("Index", "Inventory")" class="text-decoration-none"><div class="module-card"><h5>📦 Inventory</h5><p>Track supplies & stock levels</p></div></a>
+        <a href="@Url.Action("Index", "StaffOwner")" class="text-decoration-none"><div class="module-card"><h5>👔 Staff Management</h5><p>Employee schedules & access</p></div></a>
+        <a href="@Url.Action("Index", "Notifications")" class="text-decoration-none"><div class="module-card"><h5>💬 Notifications</h5><p>SMS & email templates</p></div></a>
+        <a href="@Url.Action("Index", "Business")" class="text-decoration-none"><div class="module-card"><h5>🔧 Business Settings</h5><p>Hours, payments & system</p></div></a>
+        <a href="@Url.Action("Index", "Reports")" class="text-decoration-none"><div class="module-card"><h5>📊 Reports & Analytics</h5><p>Financial performance data</p></div></a>
+        <a href="@Url.Action("Index", "Incidents")" class="text-decoration-none"><div class="module-card"><h5>📝 Incident Reports</h5><p>Track issues & resolutions</p></div></a>
+    </div>
+
+    <div class="status-section">
+        <h4 class="section-title">Order Status Breakdown</h4>
+
+        <div class="status-list">
+            <p>🕓 Queued: <span>@Model.QueuedCount</span></p>
+            <p>🧼 Washing: <span>@Model.WashingCount</span></p>
+            <p>💨 Drying: <span>@Model.DryingCount</span></p>
+            <p>✅ Ready: <span>@Model.ReadyCount</span></p>
+        </div>
+
+        <div class="chart-center-container">
+            <div class="small-chart-wrapper">
+                <canvas id="orderChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="alerts">
+        <h4 class="section-title">Business Alerts & Notifications</h4>
+        @if (Model.Alerts != null && Model.Alerts.Any())
+        {
+            foreach (var alert in Model.Alerts)
+            {
+                <div class="alert-card">
+                    <p class="align-items-center" style="font-size: 15px;">⚠️  @alert.Message</p>
+                    <button onclick="window.open('@alert.Link', '_blank')">View</button>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No alerts at the moment.</p>
+        }
+    </div>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('orderChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Queued', 'Washing', 'Drying', 'Ready'],
+            datasets: [{
+                data: [@Model.QueuedCount, @Model.WashingCount, @Model.DryingCount, @Model.ReadyCount],
+                backgroundColor: ['#0a3d91', '#4eb9f7', '#f9d342', '#28a745']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+</script>
+

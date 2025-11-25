@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "Staff Dashboard - Labamoto Laundry Shop";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <img src="~/Content/Images/labamoto-logo.png" alt="Labamoto Logo" style="width: 250px;" />
+        <h2 class="fw-bold text-primary mt-3">Welcome, @Session["StaffUsername"]!</h2>
+        <p class="text-muted">This is your Staff Dashboard — manage daily operations and customer orders here.</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <h5 class="fw-bold">Orders</h5>
+                    <p class="text-muted mb-3">View and manage all laundry orders.</p>
+                    <a href="/Orders/Index" class="btn btn-primary w-100">Go to Orders</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <h5 class="fw-bold">Customers</h5>
+                    <p class="text-muted mb-3">View or update customer details.</p>
+                    <a href="/Customers/Index" class="btn btn-primary w-100">Manage Customers</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <h5 class="fw-bold">Inventory</h5>
+                    <p class="text-muted mb-3">Track stock and supplies in the laundry shop.</p>
+                    <a href="/Inventory/Index" class="btn btn-primary w-100">Check Inventory</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <a href="/Account/Logout" class="btn btn-outline-danger rounded-pill px-4">Logout</a>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    h2 {
+        color: #1e3a8a;
+    }
+
+    .card {
+        border-radius: 1rem;
+        transition: 0.3s ease;
+    }
+
+        .card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+    .btn-primary {
+        background-image: linear-gradient(45deg, hsl(240deg 100% 55%) 0%, hsl(220deg 100% 65%) 100%);
+        border: none;
+        transition: 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: scale(1.03);
+        }
+</style>

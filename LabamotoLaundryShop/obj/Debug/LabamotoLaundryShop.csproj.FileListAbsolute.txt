@@ -1,0 +1,278 @@
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\LabamotoLaundryShop.dll.config
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\LabamotoLaundryShop.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\LabamotoLaundryShop.pdb
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\csc.exe
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\csc.exe.config
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\csc.rsp
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\csi.exe
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\csi.exe.config
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\csi.rsp
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.AppContext.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.Console.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.Globalization.Calendars.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.IO.Compression.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.IO.Compression.ZipFile.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.Net.Http.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.Net.Sockets.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.ValueTuple.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.Xml.XPath.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\vbc.exe
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\vbc.exe.config
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\vbc.rsp
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\VBCSCompiler.exe
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\Antlr3.Runtime.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\Newtonsoft.Json.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Web.Helpers.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Web.Mvc.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Web.Optimization.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Web.Razor.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Web.WebPages.Deployment.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Web.WebPages.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Web.WebPages.Razor.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\WebGrease.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Web.Helpers.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Web.Mvc.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Web.Optimization.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Web.Razor.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Web.WebPages.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Web.WebPages.Deployment.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Web.WebPages.Razor.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\Newtonsoft.Json.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\Antlr3.Runtime.pdb
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\obj\Debug\LabamotoLaundryShop.csproj.AssemblyReference.cache
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\obj\Debug\LabamotoLaundryShop.csproj.CoreCompileInputs.cache
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\obj\Debug\Labamoto.A03206F3.Up2Date
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\obj\Debug\LabamotoLaundryShop.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\obj\Debug\LabamotoLaundryShop.pdb
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\BCrypt.Net-Next.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\BouncyCastle.Cryptography.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\Dapper.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\EntityFramework.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\EntityFramework.SqlServer.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\Google.Protobuf.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\K4os.Compression.LZ4.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\K4os.Compression.LZ4.Streams.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\K4os.Hash.xxHash.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\MySql.Data.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\MySql.Data.EntityFramework.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\QRCoder.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Buffers.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Configuration.ConfigurationManager.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.IO.Pipelines.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Memory.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Numerics.Vectors.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Threading.Tasks.Extensions.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\ZstdSharp.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\BCrypt.Net-Next.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\BouncyCastle.Cryptography.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\Dapper.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\EntityFramework.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\EntityFramework.SqlServer.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\Google.Protobuf.pdb
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\Google.Protobuf.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\K4os.Compression.LZ4.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\K4os.Compression.LZ4.Streams.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\K4os.Hash.xxHash.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\MySql.Data.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\MySql.Data.EntityFramework.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\QRCoder.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Buffers.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Configuration.ConfigurationManager.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.IO.Pipelines.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Memory.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Numerics.Vectors.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\System.Threading.Tasks.Extensions.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\SimpleInjector.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\SimpleInjector.Integration.Web.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\SimpleInjector.Integration.Web.Mvc.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\SimpleInjector.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\SimpleInjector.Integration.Web.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\SimpleInjector.Integration.Web.Mvc.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\Unity.Abstractions.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\Unity.Container.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\Unity.Mvc.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\WebActivatorEx.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\Unity.Abstractions.pdb
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\Unity.Container.pdb
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\Unity.Mvc.pdb
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\Unity.Mvc.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\BouncyCastle.Crypto.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\itextsharp.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\itextsharp.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop\LabamotoLaundryShop\bin\Rotativa.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\LabamotoLaundryShop.dll.config
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\LabamotoLaundryShop.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\LabamotoLaundryShop.pdb
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\csc.exe
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\csc.exe.config
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\csc.rsp
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\csi.exe
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\csi.exe.config
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\csi.rsp
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.AppContext.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.Console.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.Globalization.Calendars.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.IO.Compression.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.IO.Compression.ZipFile.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.Net.Http.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.Net.Sockets.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.ValueTuple.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.Xml.XPath.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\vbc.exe
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\vbc.exe.config
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\vbc.rsp
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\VBCSCompiler.exe
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\Antlr3.Runtime.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\BCrypt.Net-Next.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\BouncyCastle.Crypto.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\BouncyCastle.Cryptography.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\Dapper.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\EntityFramework.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\EntityFramework.SqlServer.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\Google.Protobuf.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\itextsharp.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\K4os.Compression.LZ4.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\K4os.Compression.LZ4.Streams.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\K4os.Hash.xxHash.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\MySql.Data.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\MySql.Data.EntityFramework.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\Newtonsoft.Json.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\QRCoder.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\Rotativa.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\SimpleInjector.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\SimpleInjector.Integration.Web.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\SimpleInjector.Integration.Web.Mvc.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Buffers.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Configuration.ConfigurationManager.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.IO.Pipelines.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Memory.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Numerics.Vectors.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Threading.Tasks.Extensions.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Web.Helpers.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Web.Mvc.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Web.Optimization.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Web.Razor.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Web.WebPages.Deployment.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Web.WebPages.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Web.WebPages.Razor.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\Unity.Abstractions.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\Unity.Container.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\Unity.Mvc.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\WebActivatorEx.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\WebGrease.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\ZstdSharp.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\BCrypt.Net-Next.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\BouncyCastle.Cryptography.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\Dapper.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\EntityFramework.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\EntityFramework.SqlServer.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\Google.Protobuf.pdb
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\Google.Protobuf.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\itextsharp.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\K4os.Compression.LZ4.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\K4os.Compression.LZ4.Streams.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\K4os.Hash.xxHash.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\MySql.Data.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\MySql.Data.EntityFramework.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\QRCoder.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\SimpleInjector.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\SimpleInjector.Integration.Web.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\SimpleInjector.Integration.Web.Mvc.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Buffers.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Configuration.ConfigurationManager.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.IO.Pipelines.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Memory.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Numerics.Vectors.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Threading.Tasks.Extensions.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Web.Helpers.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Web.Mvc.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Web.Optimization.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Web.Razor.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Web.WebPages.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Web.WebPages.Deployment.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\System.Web.WebPages.Razor.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\Newtonsoft.Json.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\Unity.Abstractions.pdb
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\Unity.Container.pdb
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\Unity.Mvc.pdb
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\Unity.Mvc.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\Antlr3.Runtime.pdb
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\obj\Debug\LabamotoLaundryShop.csproj.AssemblyReference.cache
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\obj\Debug\LabamotoLaundryShop.csproj.CoreCompileInputs.cache
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\obj\Debug\Labamoto.A03206F3.Up2Date
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\obj\Debug\LabamotoLaundryShop.dll
+C:\Users\jc suan\source\repositories\LabamotoLaundryShop - Copy\LabamotoLaundryShop\obj\Debug\LabamotoLaundryShop.pdb

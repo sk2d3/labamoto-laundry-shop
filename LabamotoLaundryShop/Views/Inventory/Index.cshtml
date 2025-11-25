@@ -1,0 +1,679 @@
+﻿@model LabamotoLaundryShop.Models.InventoryViewModel
+
+@{
+    ViewBag.Title = "Inventory";
+    Layout = "~/Views/Shared/_OwnerLayout.cshtml";
+}
+
+<style>
+    /* Container */
+    .inventory-container {
+        max-width: 1250px;
+        margin: 20px auto;
+        padding: 30px 40px;
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+        /* Heading */
+        .inventory-container h2 {
+            color: #0d6efd;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 25px;
+        }
+
+    /* Controls */
+    .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 20px;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* Buttons */
+    .btn-primary, .btn-outline-primary {
+        border-radius: 6px;
+        padding: 8px 18px;
+    }
+
+    /* Stats Cards Container */
+    .stats-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+        .stats-cards .card {
+            flex: 1;
+            min-width: 180px;
+            padding: 25px;
+            border: none;
+            text-align: center;
+            border-radius: 12px;
+            background: #ffffff;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+            .stats-cards .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            }
+
+            .stats-cards .card h5 {
+                font-size: 16px;
+                color: #0B64E5;
+                margin-bottom: 8px;
+            }
+
+            .stats-cards .card p {
+                font-size: 26px;
+                color: #000000;
+                margin: 0;
+            }
+
+    .table-responsive {
+        margin-bottom: 20px;
+    }
+
+    @@media (max-width: 768px) {
+        .controls {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .controls-left {
+            justify-content: flex-start;
+        }
+    }
+
+    /* Overlay with blue semi-transparent background */
+    .success-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 123, 255, 0.2); /* light blue overlay */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+    }
+
+    /* Card with fixed size */
+    .success-card {
+        width: 250px;
+        height: 200px;
+        background-color: white;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        text-align: center;
+        padding: 20px;
+    }
+
+    /* White circle with checkmark */
+    .check-circle {
+        width: 70px;
+        height: 70px;
+        background-color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .success-text {
+        font-size: 16px;
+        font-weight: 500;
+        color: #007bff;
+    }
+</style>
+
+<div class="inventory-container">
+    <a href="@Url.Action("Dashboard", "Owner")" class="btn btn-outline-secondary mb-3">← Back</a>
+    <h2>📦 Inventory & Supplies Management</h2>
+
+
+
+    <!-- Stats Cards -->
+    <div class="stats-cards mb-5">
+        <div class="card">
+            <h5>Total Items</h5>
+            <p>@Model.TotalItems</p>
+        </div>
+        <div class="card">
+            <h5>Low Stock</h5>
+            <p>@Model.LowStockItems</p>
+        </div>
+        <div class="card">
+            <h5>Out of Stock</h5>
+            <p>@Model.OutOfStockItems</p>
+        </div>
+        <div class="card">
+            <h5>Monthly Usage Cost</h5>
+            <p>₱ @Model.MonthlyUsageCost.ToString("N2")</p>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-5">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0 fw-semibold text-dark">🧺 Inventory Items</h4>
+                <!--<button class="btn btn-primary btn-sm">
+                    <i class="bi bi-plus-circle"></i> Add New Item
+                </button>-->
+            </div>
+
+            <!-- Search & Filter -->
+            <form method="get" action="@Url.Action("Index", "Inventory")" class="row g-2 align-items-center mb-3">
+                <div class="col-md-5">
+                    <input type="text" name="search" id="searchBox"
+                           value="@Request.QueryString["search"]"
+                           placeholder="Search by item name, brand..." class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <select name="category" id="filterType" class="form-select">
+                        <option value="">All Types</option>
+                        @foreach (var cat in ViewBag.Categories as List<string>)
+                        {
+                            <option value="@cat" @(Request.QueryString["category"] == cat ? "selected" : "")>@cat</option>
+                        }
+                    </select>
+                </div>
+            </form>
+
+            <!-- Inventory Table -->
+            <div class="table-responsive">
+                <table class="table table-hover align-middle text-center border">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Item Name</th>
+                            <th>Brand/Type</th>
+                            <th>Category</th>
+                            <th>Current Stock</th>
+                            <th>Min Level</th>
+                            <th>Unit Cost</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.InventoryItems)
+                        {
+                            <tr>
+                                <td>@item.ItemName</td>
+                                <td>@item.Brand</td>
+                                <td>@item.Category</td>
+                                <td>@item.CurrentStock.ToString("0.#") @item.Unit</td>
+                                <td>@item.MinLevel.ToString("0.#") @item.Unit</td>
+                                <td>₱ @item.UnitCost.ToString("N2") /@item.Unit</td>
+                                <td>
+                                    @if (item.Status == "OK")
+                                    {<span class="badge bg-success">OK</span>}
+                                    else if (item.Status == "Low")
+                                    {<span class="badge bg-warning text-dark">Low</span>}
+                                    else
+                                    {<span class="badge bg-danger">OUT</span>}
+                                </td>
+                                <td>
+                                    <button type="button"
+                                            class="btn btn-outline-primary btn-sm restock-btn"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#restockModal"
+                                            data-name="@item.ItemName"
+                                            data-currentstock="@item.CurrentStock"
+                                            data-minlevel="@item.MinLevel"
+                                            data-unit="@item.Unit"
+                                            data-unitcost="@item.UnitCost"
+                                            data-supplier="@item.Supplier">
+                                        Restock
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- Restock Alerts & Purchase Orders -->
+    <div class="mb-4">
+        <div class="p-5 rounded-3 shadow-sm border-0 bg-white">
+            <h4 class="mb-3 text-dark fw-semibold" style="font-size: 17px;">Restock Alerts & Purchase Orders</h4>
+
+            @foreach (var item in Model.InventoryItems.Where(i => i.Status == "Low" || i.Status == "OUT"))
+            {
+                <div class="alert @((item.Status == "OUT") ? "alert-danger" : "alert-warning") d-flex justify-content-between align-items-center mb-3 rounded-2 shadow-sm p-3">
+                    <div>
+                        <strong>@item.ItemName</strong> -
+                        @((item.Status == "OUT") ? "OUT OF STOCK" : $"LOW STOCK ({item.CurrentStock} remaining)")<br />
+                        @if (item.Status == "OUT")
+                        {
+                            <small>Last order: @(item.TransactionDate.ToString("MMM d, yyyy"))</small>
+                        }
+                        else
+                        {
+                            <small>Estimated to run out in @(item.EstimatedDaysRemaining.HasValue ? item.EstimatedDaysRemaining.Value : 0) days</small>
+                        }
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-sm btn-primary restock-btn shadow-sm"
+                                data-bs-toggle="modal"
+                                data-bs-target="#restockModal"
+                                data-name="@item.ItemName"
+                                data-currentstock="@item.CurrentStock"
+                                data-minlevel="@item.MinLevel"
+                                data-unit="@item.Unit"
+                                data-unitcost="@item.UnitCost"
+                                data-supplier="@item.Supplier">
+                            Create Purchase Order
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Restock / Create Purchase Order Modal -->
+    <div class="modal fade" id="restockModal" tabindex="-1" aria-labelledby="restockModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <form id="createPOForm" method="post" action="@Url.Action("CreatePurchaseOrder", "Inventory")">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title" id="restockModalLabel">Create Purchase Order</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="modalItemName" class="form-label">Item Name</label>
+                                <input type="text" class="form-control" id="modalItemName" name="ItemName" readonly />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="modalCurrentStock" class="form-label">Current Stock</label>
+                                <input type="text" class="form-control" id="modalCurrentStock" name="CurrentStock" readonly />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="modalMinLevel" class="form-label">Minimum Level</label>
+                                <input type="text" class="form-control" id="modalMinLevel" name="MinLevel" readonly />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="modalUnit" class="form-label">Unit</label>
+                                <input type="text" class="form-control" id="modalUnit" name="Unit" readonly />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="modalOrderQty" class="form-label">Order Quantity *</label>
+                                <input type="number" class="form-control" id="modalOrderQty" name="OrderQuantity" min="1" required />
+                                <small class="text-muted" id="modalSuggestedQty"></small>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="modalSupplier" class="form-label">Supplier</label>
+                                <select id="modalSupplier" class="form-select" name="Supplier" required></select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="modalUnitCost" class="form-label">Unit Cost (₱)</label>
+                                <input type="text" class="form-control" id="modalUnitCost" name="UnitCost" readonly />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="modalTotalCost" class="form-label">Estimated Total Cost</label>
+                                <input type="text" class="form-control" id="modalTotalCost" name="TotalCost" readonly />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="modalDeliveryDate" class="form-label">Delivery Date</label>
+                                <input type="date" class="form-control" id="modalDeliveryDate" name="DeliveryDate" required />
+                            </div>
+                            <div class="col-12">
+                                <label for="modalNotes" class="form-label">Notes (Optional)</label>
+                                <textarea class="form-control" id="modalNotes" name="Notes" rows="2"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary shadow-sm">Create Purchase Order</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Overlay -->
+    <div id="poSuccessOverlay" class="success-overlay d-none">
+        <div class="success-card">
+            <div class="check-circle">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#007bff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 6L9 17l-5-5" />
+                </svg>
+            </div>
+            <div class="success-text">Successfully Created Purchase Order</div>
+        </div>
+    </div>
+
+
+
+    <!-- Action Buttons -->
+    <div class="d-flex gap-2 flex-wrap mb-4">
+        <button class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#addInventoryModal">
+            + Add New Inventory Item
+        </button>
+        <a href="@Url.Action("PurchaseHistory", "Inventory")" class="btn btn-outline-primary shadow-sm">
+            📋 View Purchase History
+        </a>
+        <a href="@Url.Action("GenerateReport", "Inventory")" class="btn btn-outline-secondary shadow-sm">
+            📊 Generate Inventory Report
+        </a>
+    </div>
+
+
+    <!-- Add New Inventory Item Modal -->
+    <div class="modal fade" id="addInventoryModal" tabindex="-1" aria-labelledby="addInventoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <form method="post" action="@Url.Action("Add", "Inventory")">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title" id="addInventoryModalLabel">Add New Inventory Item</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <!-- Category -->
+                            <div class="col-md-6">
+                                <label for="Category" class="form-label">Item Category *</label>
+                                <select class="form-select" id="Category" name="category" required>
+                                    <option value="">Select Category</option>
+                                    @foreach (var cat in ViewBag.Categories as List<string>)
+                                    {
+                                        <option value="@cat" @(ViewBag.SelectedCategory == cat ? "selected" : "")>@cat</option>
+                                    }
+                                </select>
+
+                            </div>
+
+                            <!-- Item Name -->
+                            <div class="col-md-6">
+                                <label for="Name" class="form-label">Item Name *</label>
+                                <input type="text" class="form-control" id="Name" name="ItemName" placeholder="e.g., Fabric Softener" required>
+                            </div>
+
+                            <!-- Brand -->
+                            <div class="col-md-6">
+                                <label for="Brand" class="form-label">Brand/Type</label>
+                                <input type="text" class="form-control" id="Brand" name="Brand" placeholder="e.g., Downy" required>
+                            </div>
+
+                            <!-- Unit -->
+                            <div class="col-md-6">
+                                <label for="Unit" class="form-label">Unit of Measurement *</label>
+                                <select class="form-select" id="Unit" name="Unit" required>
+                                    <option value="">Select Unit</option>
+                                    <option value="kg">kg</option>
+                                    <option value="L">L</option>
+                                    <option value="pcs">pcs</option>
+                                    <option value="bottle">bottle</option>
+                                    <option value="roll">roll</option>
+                                    <option value="boxed">boxes</option>
+                                </select>
+                            </div>
+
+                            <!-- Stock -->
+                            <div class="col-md-4">
+                                <label for="CurrentStock" class="form-label">Initial Stock *</label>
+                                <input type="number" class="form-control" id="CurrentStock" name="CurrentStock" value="0" min="0" required>
+                            </div>
+
+                            <!-- Minimum Stock -->
+                            <div class="col-md-4">
+                                <label for="MinLevel" class="form-label">Minimum Level *</label>
+                                <input type="number" class="form-control" id="MinLevel" name="MinimumStock" value="0" min="0" required>
+                                <small class="text-muted">Alert when below this</small>
+                            </div>
+
+                            <!-- Reorder Point -->
+                            <div class="col-md-4">
+                                <label for="ReorderPoint" class="form-label">Reorder Point</label>
+                                <input type="number" class="form-control" id="ReorderPoint" name="ReorderPoint" value="0" min="0">
+                            </div>
+
+                            <!-- Unit Cost -->
+                            <div class="col-md-6">
+                                <label for="UnitCost" class="form-label">Unit Cost (₱) *</label>
+                                <input type="number" step="0.01" class="form-control" id="UnitCost" name="UnitCost" value="0.00" min="0" required>
+                            </div>
+
+                            <!-- Supplier -->
+                            <div class="col-md-6">
+                                <label for="Supplier" class="form-label">Supplier</label>
+                                <input type="text" class="form-control" id="Supplier" name="Supplier" placeholder="e.g., ABC Trading Corp" required>
+                            </div>
+
+                            <!-- Contact -->
+                            <div class="col-md-6">
+                                <label for="SupplierContact" class="form-label">Supplier Contact</label>
+                                <input type="text" class="form-control" id="SupplierContact" name="SupplierContact" placeholder="Phone or email" required>
+                            </div>
+
+                            <!-- Storage -->
+                            <div class="col-md-6">
+                                <label for="StorageLocation" class="form-label">Storage Location</label>
+                                <input type="text" class="form-control" id="StorageLocation" name="StorageLocation" placeholder="e.g., Stockroom - Shelf A3" required>
+                            </div>
+
+                            <!-- Notes -->
+                            <div class="col-12">
+                                <label for="Notes" class="form-label">Notes</label>
+                                <textarea class="form-control" id="Notes" name="Notes" rows="2" placeholder="Additional information..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary shadow-sm">Add Inventory Item</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchBox = document.getElementById("searchBox");
+        const filterType = document.getElementById("filterType");
+        const table = document.querySelector(".table tbody");
+        const rows = table.querySelectorAll("tr");
+
+        function filterTable() {
+            const searchValue = searchBox.value.toLowerCase();
+            const typeValue = filterType.value.toLowerCase();
+
+            rows.forEach(row => {
+                const name = row.cells[0].innerText.toLowerCase();
+                const brand = row.cells[1].innerText.toLowerCase();
+                const category = row.cells[2].innerText.toLowerCase();
+
+                const matchesSearch = name.includes(searchValue) || brand.includes(searchValue);
+                const matchesType = typeValue === "" || category === typeValue;
+
+                row.style.display = (matchesSearch && matchesType) ? "" : "none";
+            });
+        }
+
+        searchBox.addEventListener("input", filterTable);
+        filterType.addEventListener("change", filterTable);
+    });
+</script>
+
+<script>
+    var restockModal = document.getElementById('restockModal');
+    restockModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+
+        var name = button.getAttribute('data-name');
+        var currentStock = parseFloat(button.getAttribute('data-currentstock'));
+        var minLevel = parseFloat(button.getAttribute('data-minlevel'));
+        var unit = button.getAttribute('data-unit');
+        var unitCost = parseFloat(button.getAttribute('data-unitcost'));
+        var supplier = button.getAttribute('data-supplier');
+
+        document.getElementById('modalItemName').value = name;
+        document.getElementById('modalCurrentStock').value = currentStock;
+        document.getElementById('modalMinLevel').value = minLevel;
+        document.getElementById('modalUnit').value = unit;
+        document.getElementById('modalUnitCost').value = unitCost.toFixed(2);
+
+        // Suggested order quantity
+        var suggestedQty = Math.ceil(minLevel - currentStock);
+        suggestedQty = suggestedQty > 0 ? suggestedQty : 1;
+        document.getElementById('modalOrderQty').value = suggestedQty;
+        document.getElementById('modalSuggestedQty').innerText = "Suggested: " + suggestedQty;
+
+        // Supplier select
+        var supplierSelect = document.getElementById('modalSupplier');
+        supplierSelect.innerHTML = `<option selected>${supplier}</option>`;
+
+        // Update total cost when quantity changes
+        var qtyInput = document.getElementById('modalOrderQty');
+        var totalCostInput = document.getElementById('modalTotalCost');
+        qtyInput.addEventListener('input', function () {
+            var qty = parseInt(qtyInput.value) || 0;
+            totalCostInput.value = (qty * unitCost).toFixed(2);
+        });
+
+        totalCostInput.value = (suggestedQty * unitCost).toFixed(2);
+    });
+</script>
+
+
+<script>
+    // Pre-fill modal when "Create Purchase Order" button is clicked
+    document.querySelectorAll('.restock-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const itemName = this.dataset.name;
+            const currentStock = parseFloat(this.dataset.currentstock) || 0;
+            const minLevel = parseFloat(this.dataset.minlevel) || 0;
+            const unit = this.dataset.unit || '';
+            const unitCost = parseFloat(this.dataset.unitcost) || 0;
+            const supplier = this.dataset.supplier || '';
+
+            document.getElementById('modalItemName').value = itemName;
+            document.getElementById('modalCurrentStock').value = currentStock;
+            document.getElementById('modalMinLevel').value = minLevel;
+            document.getElementById('modalUnit').value = unit;
+            document.getElementById('modalUnitCost').value = unitCost.toFixed(2);
+
+            // Populate supplier dropdown
+            const supplierSelect = document.getElementById('modalSupplier');
+            supplierSelect.innerHTML = `<option value="${supplier}">${supplier}</option>`;
+
+            // Suggested order quantity
+            const suggestedQty = Math.max(minLevel - currentStock, 1);
+            document.getElementById('modalSuggestedQty').textContent = `Suggested order: ${suggestedQty}`;
+
+            // Pre-fill Order Quantity with suggested
+            document.getElementById('modalOrderQty').value = suggestedQty;
+
+            // Update Total Cost
+            document.getElementById('modalTotalCost').value = (suggestedQty * unitCost).toFixed(2);
+        });
+    });
+
+    // Update Total Cost dynamically when Order Quantity changes
+    document.getElementById('modalOrderQty').addEventListener('input', function () {
+        const qty = parseFloat(this.value) || 0;
+        const unitCost = parseFloat(document.getElementById('modalUnitCost').value) || 0;
+        document.getElementById('modalTotalCost').value = (qty * unitCost).toFixed(2);
+    });
+</script>
+
+
+<script>
+    document.getElementById("createPOBtn").addEventListener("click", function () {
+        var form = document.getElementById("createPOForm");
+        var formData = new FormData(form);
+
+        fetch(form.action, {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.text())
+            .then(data => {
+                // Close the modal
+                var modal = bootstrap.Modal.getInstance(document.getElementById("restockModal"));
+                modal.hide();
+
+                // Show the toast
+                var toastEl = document.getElementById("poToast");
+                var toast = new bootstrap.Toast(toastEl);
+                toast.show();
+
+                // Optionally reset form
+                form.reset();
+            })
+            .catch(error => console.error("Error:", error));
+    });
+</script>
+
+<script>
+    function showSuccessOverlay() {
+        var overlay = document.getElementById("poSuccessOverlay");
+        overlay.classList.remove("d-none");
+
+        // Auto hide after 1.2 seconds
+        setTimeout(function () {
+            overlay.classList.add("d-none");
+        }, 1200);
+    }
+
+    // Example: Trigger after form submission
+    document.getElementById("createPOBtn").addEventListener("click", function (e) {
+        e.preventDefault(); // prevent normal submit
+
+        var form = document.getElementById("createPOForm");
+        var formData = new FormData(form);
+
+        fetch(form.action, {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.text())
+            .then(data => {
+                // Close the modal if open
+                var modalEl = document.getElementById("restockModal");
+                var modal = bootstrap.Modal.getInstance(modalEl);
+                if (modal) modal.hide();
+
+                // Show success overlay
+                showSuccessOverlay();
+
+                // Reset form
+                form.reset();
+            })
+            .catch(error => console.error("Error:", error));
+    });
+</script>

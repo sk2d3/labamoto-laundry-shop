@@ -1,0 +1,39 @@
+﻿@model IEnumerable<LabamotoLaundryShop.Models.PayrollRecord>
+
+@{ 
+    Layout = "~/Views/Shared/_OwnerLayout.cshtml";
+}
+
+
+<h2>Payroll Payslips</h2>
+<p>From @ViewBag.StartDate to @ViewBag.EndDate</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Employee</th>
+            <th>Role</th>
+            <th>Gross Pay</th>
+            <th>Deductions</th>
+            <th>Net Pay</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.Name</td>
+                <td>@p.Role</td>
+                <td>@p.GrossPay.ToString("C")</td>
+                <td>@p.Deductions.ToString("C")</td>
+                <td>@p.NetPay.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    window.onload = function() {
+        window.print(); // automatically triggers the print dialog
+    };
+</script>

@@ -1,0 +1,256 @@
+﻿@{
+    ViewBag.Title = "Staff Login - Labamoto Laundry Shop";
+}
+
+<style>
+    /* Hide header/nav */
+    header, nav.navbar, .navbar {
+        display: none !important;
+    }
+
+    body {
+        width: 100%;
+        height: 100%;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(90deg,#e9f2ff,#ffffff);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    /* Login Card */
+    .login-card {
+        width: 100%;
+        max-width: 420px;
+        margin: auto;
+        padding: 40px 40px;
+        border-bottom-right-radius: 50px;
+        border-top-left-radius: 50px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(10px); /* adjusts blur intensity */
+        background: rgba(255, 255, 255, 0.3); /* make it slightly transparent */
+        border: 1px solid rgba(255, 255, 255, 0.2); /* optional frosted-glass effect */
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    /* Close button (top-right) */
+    .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 1.5rem;
+        color: #6c757d;
+        text-decoration: none;
+        font-weight: bold;
+        transition: 0.2s ease;
+        z-index: 10;
+    }
+
+        .close-btn:hover {
+            color: red;
+            transform: scale(1.2);
+        }
+
+    
+
+    /* From Uiverse.io by mi-series */
+    .btn {
+        outline: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #1E90FF; /* Blue background */
+        width: 100%;
+        border: 0;
+        border-radius: 4px;
+        box-shadow: 0 4px 12px rgba(30, 144, 255, 0.3); /* Blue shadow */
+        box-sizing: border-box;
+        padding: 16px 20px;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      opacity: .95;
+    }
+
+    .btn .animation {
+      border-radius: 100%;
+      animation: ripple 0.6s linear infinite;
+    }
+
+    @@keyframes ripple {
+        0% {
+            box-shadow: 0 0 0 0 rgba(0, 0, 255, 0.1), 0 0 0 20px rgba(0, 0, 255, 0.1), 0 0 0 40px rgba(0, 0, 255, 0.1), 0 0 0 60px rgba(0, 0, 255, 0.1);
+        }
+
+        100% {
+            box-shadow: 0 0 0 20px rgba(0, 0, 255, 0.1), 0 0 0 40px rgba(0, 0, 255, 0.1), 0 0 0 60px rgba(0, 0, 255, 0.1), 0 0 0 80px rgba(0, 0, 255, 0);
+        }
+    }
+
+    /* Brand logo */
+    .brand-logo {
+        width: 80%;
+        max-width: 250px;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    /* Input styling */
+    .form-control {
+        width: 100%;
+        max-width: 350px;
+        margin: 0 auto 15px auto;
+        padding: 10px 12px;
+        box-sizing: border-box;
+    }
+
+    /* Password wrapper (eye icon feature) */
+    .password-wrapper {
+        position: relative;
+        width: 100%;
+        max-width: 350px;
+        margin: 0 auto 15px auto;
+    }
+
+        .password-wrapper input {
+            width: 100%;
+            padding-right: 40px;
+        }
+
+        .password-wrapper .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6c757d;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+            .password-wrapper .toggle-password:hover {
+                color: #0d6efd;
+            }
+
+    /* Bubble animation */
+    .bubble {
+        position: absolute;
+        bottom: -100px;
+        background: rgba(0, 173, 255, 0.3);
+        border-radius: 50%;
+        animation: rise 8s infinite ease-in;
+        z-index: 0;
+    }
+
+    @@keyframes rise {
+        0% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        100% {
+            transform: translateY(-120vh) scale(1.3);
+            opacity: 0;
+        }
+    }
+
+    /* Alert Styling */
+    .alert-box {
+        margin: 10px 20px 20px 20px;
+        border-radius: 8px;
+        font-size: 0.95rem;
+    }
+
+    /* Responsive adjustments */
+    @@media (max-width: 480px) {
+        .login-card {
+            padding: 30px 15px;
+        }
+
+        .gradient-btn, .form-control {
+            max-width: 100%;
+        }
+    }
+</style>
+
+<div class="d-flex align-items-center justify-content-center vh-100 position-relative">
+    <div id="bubble-container"></div>
+
+    <div class="login-card">
+        <!-- Close button -->
+        <a href="/Account/ChooseRole" class="close-btn">&times;</a>
+
+        <!--<img src="~/Content/Images/labamoto-removebg.png" alt="Labamoto Logo" class="brand-logo mx-auto d-block" />-->
+        <h4 class="fw-bold text-primary mb-1" style="color: #353F40 !important;">Staff Login</h4>
+        <p class="text-muted mb-4">Enter your credentials to continue</p>
+
+        <!-- Validation Alert -->
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger alert-box" role="alert">
+                @ViewBag.Error
+            </div>
+        }
+
+    <form method="post" action="/Account/StaffLogin">
+        <input type="text" id="Username" name="Username" class="form-control" placeholder="Enter username" required />
+
+        <div class="password-wrapper">
+            <input type="password" id="Password" name="Password" class="form-control" placeholder="Enter password" required />
+            <i class="toggle-password bi bi-eye" id="togglePassword"></i>
+        </div>
+        <!--<button type="submit" class="btn gradient-btn py-2 fs-5">Log In</button>-->
+        <button class="btn py-2 fs-5" type="submit">
+            <i class="animation"></i>LOGIN<i class="animation"></i>
+        </button>
+
+    </form>
+    </div>
+</div>
+
+<!-- Bootstrap Icons CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+<script>
+    // Bubble animation
+    function createBubble() {
+        const container = document.getElementById("bubble-container");
+        const bubble = document.createElement("div");
+        bubble.classList.add("bubble");
+
+        const size = Math.random() * 40 + 10;
+        bubble.style.width = `${size}px`;
+        bubble.style.height = `${size}px`;
+        bubble.style.left = `${Math.random() * 100}%`;
+        bubble.style.animationDuration = `${Math.random() * 4 + 5}s`;
+
+        container.appendChild(bubble);
+        setTimeout(() => bubble.remove(), 8000);
+    }
+
+    setInterval(createBubble, 400);
+
+    // Toggle password visibility
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordField = document.getElementById("Password");
+
+    togglePassword.addEventListener("click", function () {
+        const type = passwordField.type === "password" ? "text" : "password";
+        passwordField.type = type;
+
+        this.classList.toggle("bi-eye");
+        this.classList.toggle("bi-eye-slash");
+    });
+</script>

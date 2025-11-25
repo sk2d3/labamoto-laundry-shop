@@ -1,0 +1,278 @@
+﻿@model LabamotoLaundryShop.Models.NotificationsViewModel
+
+@{
+    ViewBag.Title = "Notifications";
+    Layout = "~/Views/Shared/_OwnerLayout.cshtml";
+}
+
+<style>
+    /* Container */
+    .notifications-container {
+        max-width: 1250px;
+        margin: 20px auto;
+        padding: 30px 40px;
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+        /* Heading */
+        .notifications-container h2 {
+            color: #0d6efd;
+            font-weight: 600;
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+    /* Section Cards */
+    .section-card {
+        background: white;
+        border-radius: 10px;
+        padding: 30px 40px;
+        margin-bottom: 25px;
+        border: 1px solid #e0e7ff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+        .section-card h5 {
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 15px;
+            font-size: 21px;
+        }
+
+    /* SMS Template Card */
+    .template-card {
+        border-radius: 10px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+        .template-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+        }
+
+        .template-card .card-header {
+            font-weight: 500;
+            color: #fff;
+            background-color: #0d6efd;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .template-card textarea {
+            resize: none;
+            margin-bottom: 10px;
+        }
+
+    /* Stats Cards */
+    .stats-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+        .stats-cards .card {
+            flex: 1;
+            min-width: 180px;
+            padding: 25px;
+            border-radius: 12px;
+            border: none;
+            text-align: center;
+            background: #ffffff;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+            .stats-cards .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            }
+
+            .stats-cards .card h5 {
+                font-size: 16px;
+                color: black;
+                margin-bottom: 8px;
+                font-weight: 100;
+            }
+
+            .stats-cards .card p {
+                font-size: 20px;
+                margin: 0;
+                font-weight: 200;
+            }
+
+    /* Footer Buttons */
+    .footer-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    /* Modal adjustments */
+    .modal-body label {
+        font-weight: 500;
+    }
+
+    .alert-toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1055;
+    }
+</style>
+
+<div class="notifications-container">
+    <a href="@Url.Action("Dashboard", "Owner")" class="btn btn-outline-secondary mb-3">← Back</a>
+    <h2>💬 Notification & Communication Settings</h2>
+    <p>Configure automated customer notifications and SMS templates</p>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <form method="post" action="@Url.Action("SaveSettings", "Notifications")">
+
+        <!-- SMS Templates -->
+        <div class="section-card">
+            <h5>SMS Notification Templates</h5>
+            @foreach (var template in Model.Templates)
+            {
+                <div class="card template-card">
+                    <div class="card-header">
+                        <span>@template.TemplateName</span>
+                        <span>@template.Status</span>
+                    </div>
+                    <div class="card-body">
+                        <p><em>Trigger Event:</em> @template.TriggerEvent</p>
+                        <textarea class="form-control" rows="3">@template.MessageContent</textarea>
+                        <div class="footer-buttons">
+                            <button class="btn btn-primary btn-sm">Edit Template</button>
+                            <button class="btn btn-outline-secondary btn-sm">Preview</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Communication Preferences -->
+        <div class="section-card">
+            <h5>Communication Preferences</h5>
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label>SMS Gateway Provider</label>
+                    <select class="form-select">
+                        <option @(Model.Settings.SmsGateway == "Semaphore" ? "selected" : "")>Semaphore</option>
+                        <option @(Model.Settings.SmsGateway == "Twilio" ? "selected" : "")>Twilio</option>
+                        <option @(Model.Settings.SmsGateway == "Custom" ? "selected" : "")>Custom</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label>Sender Name (11 chars max)</label>
+                    <input class="form-control" maxlength="11" value="@Model.Settings.SenderName" />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label>Email Notifications:</label>
+                <div class="form-check mb-1">
+                    <input class="form-check-input" type="checkbox" @(Model.Settings.EmailReceiptEnabled ? "checked" : "") />
+                    <label class="form-check-label">Send email receipt to customer</label>
+                </div>
+                <div class="form-check mb-1">
+                    <input class="form-check-input" type="checkbox" @(Model.Settings.DailySummaryEnabled ? "checked" : "") />
+                    <label class="form-check-label">Send daily summary report</label>
+                </div>
+                <div class="form-check mb-1">
+                    <input class="form-check-input" type="checkbox" @(Model.Settings.WeeklyReportEnabled ? "checked" : "") />
+                    <label class="form-check-label">Send weekly performance report</label>
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label>Owner Email</label>
+                    <input class="form-control" value="@Model.Settings.OwnerEmail" />
+                </div>
+                <div class="col-md-6">
+                    <label>Support Email</label>
+                    <input class="form-control" value="@Model.Settings.SupportEmail" />
+                </div>
+            </div>
+        </div>
+
+        <!-- SMS Credits -->
+        <div class="section-card">
+            <h5>SMS Credits & Usage</h5>
+            <div class="stats-cards mb-3">
+                <div class="card"><h5>Available Credits</h5><p>@Model.Settings.SmsCredits SMS</p></div>
+                <div class="card"><h5>Used This Month</h5><p>@Model.Settings.SmsUsedThisMonth SMS</p></div>
+                <div class="card"><h5>Cost per SMS</h5><p>₱@Model.Settings.SmsCost</p></div>
+            </div>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#purchaseCreditsModal">Purchase More SMS Credits</button>
+        </div>
+
+        <!-- Footer Buttons -->
+        <div class="footer-buttons">
+            <button type="submit" class="btn btn-primary">Save All Changes</button>
+            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#testSmsModal">Test Send SMS</button>
+        </div>
+
+    </form>
+
+    <!-- Modals (Purchase Credits + Test SMS) -->
+    <div class="modal fade" id="purchaseCreditsModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" action="@Url.Action("PurchaseCredits", "Notifications")">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title">Purchase SMS Credits</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label>Enter number of credits:</label>
+                        <input type="number" name="credits" class="form-control" min="1" required />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Purchase</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="testSmsModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" action="@Url.Action("TestSendSMS", "Notifications")">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title">Send Test SMS</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label>Message:</label>
+                        <textarea name="message" class="form-control" rows="4" required></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Send SMS</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,97 @@
+﻿@model LabamotoLaundryShop.Models.PurchaseOrder
+@{
+    Layout = "~/Views/Shared/_OwnerLayout.cshtml";
+}
+
+<style>
+    /* Center card horizontally and vertically within parent */
+    .center-screen {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px; /* adjust spacing below your header */
+    }
+
+    .purchase-card {
+        position: relative; /* needed for absolute positioning of X button */
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        padding: 30px 40px;
+        max-width: 400px;
+        width: 100%;
+        text-align: left;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+        /* Close button in top-right corner */
+        .purchase-card .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            color: #dc3545;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .purchase-card h5 {
+            margin-bottom: 20px;
+            color: #343a40;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .purchase-card p {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+            .purchase-card p strong {
+                color: #495057;
+            }
+
+    .status {
+        padding: 5px 10px;
+        border-radius: 6px;
+        color: white;
+        font-weight: 500;
+        display: inline-block;
+    }
+
+        .status.Pending {
+            background-color: #ffc107;
+        }
+
+        .status.Confirmed {
+            background-color: #17a2b8;
+        }
+
+        .status.Shipped {
+            background-color: #007bff;
+        }
+
+        .status.Delivered {
+            background-color: #28a745;
+        }
+
+        .status.Rejected {
+            background-color: #dc3545;
+        }
+</style>
+
+<div class="center-screen">
+    <div class="purchase-card">
+        <!-- Back / X Button -->
+        <a href="@Url.Action("Index", "Inventory")" class="close-btn">&times;</a>
+
+        <h5>Purchase Order Details</h5>
+        <p><strong>PO #:</strong> @Model.Id</p>
+        <p><strong>Date:</strong> @Model.CreatedAt.ToString("MMM d, yyyy")</p>
+        <p><strong>Item:</strong> @Model.ItemName</p>
+        <p><strong>Supplier:</strong> @Model.Supplier</p>
+        <p><strong>Quantity:</strong> @Model.OrderQuantity @Model.Unit</p>
+        <p><strong>Total Cost:</strong> ₱@Model.TotalCost</p>
+        <p><strong>Status:</strong> <span class="status @Model.Status">@Model.Status</span></p>
+    </div>
+</div>

@@ -1,0 +1,227 @@
+﻿@{
+    ViewBag.Title = "Choose Role - Labamoto Laundry Shop";
+}
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    header, nav.navbar, .navbar {
+        display: none !important;
+    }
+
+    html, body {
+        width: 100%;
+        height: 100%;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(90deg,#e9f2ff,#ffffff);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    /* --- Bubble Animation --- */
+    .bubble {
+        position: absolute;
+        bottom: -100px;
+        background: rgba(13, 110, 253, 0.25);
+        border-radius: 50%;
+        animation: rise 8s infinite ease-in;
+        z-index: 0;
+    }
+
+    @@keyframes rise {
+        0% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        100% {
+            transform: translateY(-120vh) scale(1.4);
+            opacity: 0;
+        }
+    }
+
+    /* --- Centered Wrapper --- */
+    .main-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100%;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* --- Role Box --- */
+    .main-wrapper {
+        display: flex;
+        width: 950px;
+        height: 550px;
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    /* Left Section (Form Area) */
+    .left-panel {
+        flex: 1;
+        padding: 60px 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: #ffffff;
+    }
+
+        .left-panel h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1e1e2f;
+            margin-bottom: 20px;
+        }
+
+        .left-panel p {
+            font-size: 15px;
+            color: #6c757d;
+            margin-bottom: 40px;
+        }
+
+    .brand-logo {
+        width: 200px;
+        height: 25px;
+        vertical-align: middle;
+        margin-left: 2px;
+        margin-bottom: 1px;
+    }
+
+    .btn-role {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-bottom: 15px;
+    }
+
+    .btn-staff {
+        background-color: #0d6efd;
+        color: white;
+    }
+
+        .btn-staff:hover {
+            background-color: #084298;
+            transform: translateY(-2px);
+        }
+
+    .btn-owner {
+        background-color: #6610f2;
+        color: white;
+    }
+
+        .btn-owner:hover {
+            background-color: #520dc2;
+            transform: translateY(-2px);
+        }
+
+    .left-panel small {
+        margin-top: 10px;
+        color: #888;
+        font-size: 13px;
+    }
+
+    /* Right Section (Image Area) */
+    .right-panel {
+        flex: 1;
+        background: linear-gradient(145deg, #eef2ff, #d9e2ff);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .right-panel img {
+            width: 350px;
+            height: auto;
+            border-radius: 15px;
+            filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.15));
+            transition: transform 0.3s ease;
+        }
+
+            .right-panel img:hover {
+                transform: scale(1.05);
+            }
+
+    /* Responsive */
+    @@media (max-width: 900px) {
+        .main-wrapper {
+            flex-direction: column;
+            width: 90%;
+            height: auto;
+        }
+
+        .left-panel, .right-panel {
+            width: 100%;
+            padding: 40px 30px;
+        }
+
+            .right-panel img {
+                width: 250px;
+            }
+    }
+</style>
+
+<!-- Main Content -->
+<div class="main-container">
+    <div class="main-wrapper">
+        <!-- Left -->
+        <div class="left-panel">
+            <h1>
+                Welcome to
+                <img src="~/Content/Images/labamoto-removebg.png" alt="Labamoto Laundry Shop Logo" class="brand-logo" />
+            </h1>
+            <p>Select your role to continue</p>
+
+            <button class="btn-role btn-staff" onclick="window.location.href='@Url.Action("StaffLogin", "Account")'">
+                👕 Login as Staff
+            </button>
+
+            <button class="btn-role btn-owner" onclick="window.location.href='@Url.Action("OwnerLogin", "Account")'">
+                🧺 Login as Owner
+            </button>
+
+            <small>Choose your role to access your respective dashboard.</small>
+        </div>
+
+        <!-- Right -->
+        <div class="right-panel">
+            <img src="~/Content/Images/labamotolaundrybg.jpg" alt="Laundry Image" />
+        </div>
+    </div>
+</div>
+
+<script>
+    // Bubble generator
+    function createBubble() {
+        const bubble = document.createElement("div");
+        bubble.classList.add("bubble");
+
+        const size = Math.random() * 40 + 10;
+        bubble.style.width = `${size}px`;
+        bubble.style.height = `${size}px`;
+        bubble.style.left = `${Math.random() * 100}%`;
+        bubble.style.animationDuration = `${Math.random() * 4 + 5}s`;
+
+        document.body.appendChild(bubble);
+        setTimeout(() => bubble.remove(), 8000);
+    }
+
+    setInterval(createBubble, 400);
+</script>
+

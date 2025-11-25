@@ -1,0 +1,297 @@
+﻿@model IEnumerable<LabamotoLaundryShop.Models.PayrollRecord>
+
+@{
+    ViewBag.Title = "Payroll";
+    Layout = "~/Views/Shared/_OwnerLayout.cshtml";
+}
+
+<style>
+    .page-title {
+        font-size: 26px;
+        font-weight: 700;
+        color: #0d6efd;
+        margin-bottom: 20px;
+    }
+
+    .panel {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 25px 35px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+        margin-bottom: 25px;
+    }
+
+    .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+    }
+
+        .panel-header h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
+        }
+
+    .table thead {
+        background-color: #0d6efd;
+        color: white;
+    }
+
+    .filter-section {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+        .filter-section label {
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+    .summary-cards {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+    }
+
+    .summary-card {
+        flex: 1;
+        min-width: 120px;
+        background: #f8f9fc;
+        border-radius: 8px;
+        padding: 10px 15px;
+        text-align: center;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+        border: 1px solid #e6e6e6;
+        margin-bottom: 8px;
+    }
+
+    .action-panel {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .table tbody tr:hover {
+        background-color: rgba(13, 110, 253, 0.05);
+    }
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+</style>
+
+<div class="page-title">💰 Payroll Management</div>
+
+<div class="panel">
+    <!-- Header -->
+    <div class="panel-header">
+        <h2>Payroll Records</h2>
+        <a href="@Url.Action("Index", "StaffOwner")" class="btn btn-danger btn-sm" style="font-size: 18px;">&times;</a>
+    </div>
+
+    <!-- Filters (optional, e.g., by date range) -->
+    <form method="get" style="width: 100%; margin-bottom: 15px;">
+        <div class="filter-section">
+            <div style="flex:1; min-width:150px;">
+                <label>From:</label>
+                <input type="date" name="startDate" class="form-control" value="@ViewBag.StartDate">
+            </div>
+            <div style="flex:1; min-width:150px;">
+                <label>To:</label>
+                <input type="date" name="endDate" class="form-control" value="@ViewBag.EndDate">
+            </div>
+            <div style="display:flex; align-items:end;">
+                <button type="submit" class="btn btn-primary mt-4">Filter</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+        <div class="summary-card">
+            <div>@(Model != null ? Model.Count() : 0)</div>
+            <small>Total Employees</small>
+        </div>
+        <div class="summary-card">
+            <div>@(Model != null ? Model.Sum(m => m.DaysWorked) : 0)</div>
+            <small>Total Days Worked</small>
+        </div>
+        <div class="summary-card">
+            <div>₱@(Model != null ? Model.Sum(m => m.GrossPay).ToString("N0") : "0")</div>
+            <small>Total Payroll</small>
+        </div>
+        <div class="summary-card">
+            <div>₱@(Model != null ? Model.Sum(m => m.NetPay).ToString("N0") : "0")</div>
+            <small>Net Payroll</small>
+        </div>
+    </div>
+
+    <!-- Payroll Table -->
+    <div class="table-responsive">
+        <table class="table table-hover align-middle text-center border mb-4">
+            <thead class="table-light">
+                <tr>
+                    <th>Employee</th>
+                    <th>Role</th>
+                    <th>Rate</th>
+                    <th>Days</th>
+                    <th>Base Pay</th>
+                    <th>OT</th>
+                    <th>Bonus</th>
+                    <th>Gross</th>
+                    <th>Deduct.</th>
+                    <th>Net Pay</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var record in Model)
+                    {
+                        <tr>
+                            <td>@record.Name</td>
+                            <td>@record.Role</td>
+                            <td>@record.Rate.ToString("C")/day</td>
+                            <td>@record.DaysWorked</td>
+                            <td>@record.BasePay.ToString("C")</td>
+                            <td>@record.OvertimePay.ToString("C")</td>
+                            <td>@record.Bonus.ToString("C")</td>
+                            <td>@record.GrossPay.ToString("C")</td>
+                            <td>@record.Deductions.ToString("C")</td>
+                            <td>@record.NetPay.ToString("C")</td>
+                            <td>
+                                <button type="button" class="btn btn-outline-primary btn-sm flex-fill"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#viewPayrollModal-@record.PayrollID">
+                                    👁️ View
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="11" class="text-muted">No payroll records found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Payroll Modals -->
+    @foreach (var record in Model)
+    {
+        <div class="modal fade" id="viewPayrollModal-@record.PayrollID" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title">Payroll Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body text-start">
+                        <p><strong>Employee:</strong> @record.Name</p>
+                        <p><strong>Role:</strong> @record.Role</p>
+                        <p><strong>Rate:</strong> @record.Rate.ToString("C") / day</p>
+                        <p><strong>Days Worked:</strong> @record.DaysWorked</p>
+                        <p><strong>Base Pay:</strong> @record.BasePay.ToString("C")</p>
+                        <p><strong>Overtime Pay:</strong> @record.OvertimePay.ToString("C")</p>
+                        <p><strong>Bonus:</strong> @record.Bonus.ToString("C")</p>
+                        <p><strong>Gross Pay:</strong> @record.GrossPay.ToString("C")</p>
+                        <p><strong>Deductions:</strong> @record.Deductions.ToString("C")</p>
+                        <p><strong>Net Pay:</strong> @record.NetPay.ToString("C")</p>
+                        <p><strong>Pay Date:</strong> @record.PayDate.ToString("MMM dd, yyyy")</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show mt-2">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+
+<div class="row mb-3 g-3">
+    <!-- Payment Details (Left Panel) -->
+    <div class="col-md-6">
+        <div class="panel h-100 p-3">
+            <h5 class="mb-3">💳 Payment Details</h5>
+            <div class="d-flex justify-content-between mb-2">
+                <span>Gross Total:</span>
+                <span>₱@(Model != null ? Model.Sum(m => m.GrossPay).ToString("N0") : "0")</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+                <span>Total Deductions:</span>
+                <span>-₱@(Model != null ? Model.Sum(m => m.Deductions).ToString("N0") : "0")</span>
+            </div>
+            <hr />
+            <div class="d-flex justify-content-between fw-bold">
+                <span>Net Payable:</span>
+                <span>₱@(Model != null ? Model.Sum(m => m.NetPay).ToString("N0") : "0")</span>
+            </div>
+        </div>
+    </div>
+
+        <!-- Action Buttons (Right Panel) -->
+        <div class="col-md-6">
+            <div class="panel h-100 d-flex flex-column p-3">
+
+                <!-- Top Big Button -->
+                <form method="post" action="@Url.Action("ProcessPayroll", "StaffOwner")">
+                    <input type="hidden" name="startDate" value="@ViewBag.StartDate" />
+                    <input type="hidden" name="endDate" value="@ViewBag.EndDate" />
+                    <button type="submit" class="btn btn-success w-100 mb-4 fw-bold shadow-sm align-items-center"
+                            style="height:60px; border-radius:12px; font-size:1.1rem; transition: transform 0.1s;">
+                        ✅ Approve & Process Payroll
+                    </button>
+                </form>
+
+                <!-- Grid of Buttons (2 per row) -->
+                <div class="row g-3 flex-grow-1">
+                    <div class="col-6 d-grid">
+                        <a class="btn btn-outline-secondary shadow-sm rounded-3 fw-semibold text-truncate align-content-center"
+                           href="@Url.Action("ExportExcel", "StaffOwner", new { startDate = ViewBag.StartDate, endDate = ViewBag.EndDate })">
+                            📥 Export to Excel
+                        </a>
+                    </div>
+                    <div class="col-6 d-grid">
+                        <a class="btn btn-outline-secondary shadow-sm rounded-3 fw-semibold text-truncate align-content-center"
+                           href="@Url.Action("PrintPayslips", "StaffOwner", new { startDate = ViewBag.StartDate, endDate = ViewBag.EndDate })"
+                           target="_blank">
+                            🖨️ Print Payslips
+                        </a>
+                    </div>
+                    <div class="col-6 d-grid">
+                        <a class="btn btn-outline-secondary shadow-sm rounded-3 fw-semibold text-truncate align-content-center"
+                           href="@Url.Action("EmailPayslips", "StaffOwner", new { startDate = ViewBag.StartDate, endDate = ViewBag.EndDate })">
+                            📧 Email Payslips
+                        </a>
+                    </div>
+                    <div class="col-6 d-grid">
+                        <a class="btn btn-info shadow-sm rounded-3 fw-semibold text-truncate align-content-center"
+                           href="@Url.Action("PayrollHistory", "StaffOwner", new { startDate = ViewBag.StartDate, endDate = ViewBag.EndDate })">
+                            📊 Payroll History
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

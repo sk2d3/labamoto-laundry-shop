@@ -1,0 +1,19 @@
+﻿@model List<LabamotoLaundryShop.Models.PurchaseOrder>
+
+@{
+   Layout = "~/Views/Shared/_OwnerLayout.cshtml";
+}
+
+@foreach (var po in Model)
+{
+    <tr>
+        <td>PO-@po.Id</td>
+        <td>@po.CreatedAt.ToString("MMM d")</td>
+        <td>@po.ItemName</td>
+        <td>@po.Supplier</td>
+        <td>@po.OrderQuantity @po.Unit</td>
+        <td>₱@po.TotalCost</td>
+        <td>@po.Status</td>
+        <td><a href="#" class="btn btn-sm btn-outline-primary">View</a></td>
+    </tr>
+}

@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - LabamotoLaundryShop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: #f6f8fb;
+            color: #333;
+        }
+
+        /* --- NAVBAR --- */
+        .navbars {
+            background: linear-gradient(90deg,#e9f2ff,#ffffff);
+            padding: 12px 120px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #1e293b;
+            border-bottom: 2px solid #dbe4f0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Brand Section */
+        .navbars-brand {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 18px;
+            color: #475569;
+            text-decoration: none;
+            letter-spacing: 0.3px;
+            margin-left: 14px;
+        }
+
+        /* Navbar Links */
+        .navbars-links {
+            display: flex;
+            gap: 20px;
+        }
+
+            .navbars-links a {
+                color: #475569;
+                text-decoration: none;
+                font-weight: 500;
+                font-size: 15px;
+                position: relative;
+                padding: 8px 8px;
+                transition: all 0.3s ease;
+                border-radius: 6px;
+            }
+
+                .navbars-links a:hover {
+                    background: rgba(255, 255, 255, 0.1);
+                    color: #0b5ed7 !important;
+                }
+
+                .navbars-links a::after {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    bottom: 4px;
+                    width: 0%;
+                    height: 2px;
+                    background: #38bdf8;
+                    transition: width 0.3s ease;
+                }
+
+                .navbars-links a:hover::after {
+                    width: 100%;
+                }
+
+                /* ✅ Active Link (current page stays highlighted) */
+                .navbars-links a.active {
+                    color: #0b5ed7 !important;
+                }
+
+                    .navbars-links a.active::after {
+                        width: 100%;
+                    }
+
+        /* Logout Button */
+        .logout-btn {
+            background: #ffffff;
+            color: #0a3d91;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+            .logout-btn:hover {
+                background: #e2e8f0;
+            }
+        
+    </style>
+</head>
+<body>
+    @{
+        var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    }
+
+    <nav class="navbars">
+        <a href="/Owner/Dashboard" class="navbars-brand">LabamotoLaundryShop</a>
+        <div class="navbars-links">
+            <a href="@Url.Action("Dashboard", "Owner")" class="@(currentController == "Owner" ? "active" : "")">Dashboard</a>
+            <a href="@Url.Action("Index", "Pricing")" class="@(currentController == "Pricing" ? "active" : "")">Pricing</a>
+            <a href="@Url.Action("Index", "Customers")" class="@(currentController == "Customers" ? "active" : "")">Customers</a>
+            <a href="@Url.Action("Index", "Inventory")" class="@(currentController == "Inventory" ? "active" : "")">Inventory</a>
+            <a href="@Url.Action("Index", "StaffOwner")" class="@(currentController == "StaffOwner" ? "active" : "")">Staff</a>
+            <a href="@Url.Action("Index", "Notifications")" class="@(currentController == "Notifications" ? "active" : "")">Notifications</a>
+            <a href="@Url.Action("Index", "Business")" class="@(currentController == "Business" ? "active" : "")">Business</a>
+            <a href="@Url.Action("Index", "Reports")" class="@(currentController == "Reports" ? "active" : "")">Reports</a>
+            <a href="@Url.Action("Index", "Incidents")" class="@(currentController == "Incidents" ? "active" : "")">Incidents</a>
+        </div>
+        <a href="#" class="logout-btn" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</a>
+    </nav>
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to log out?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="/Account/Logout" class="btn btn-danger">OK</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        @RenderBody()
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

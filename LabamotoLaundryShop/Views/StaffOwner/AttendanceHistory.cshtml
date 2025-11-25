@@ -1,0 +1,33 @@
+﻿@model LabamotoLaundryShop.Models.StaffViewModel
+
+@{
+    Layout = "~/Views/Shared/_OwnerLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <a href="@Url.Action("Index", "StaffOwner")" class="btn btn-outline-secondary mb-3">← Back to Staff</a>
+
+    <h2>Attendance History: @Model.FullName</h2>
+
+    <div class="table-responsive mt-3">
+        <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Time In</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var record in Model.AttendanceRecords)
+                {
+                    <tr>
+                        <td>@record.Name</td>
+                        <td>@record.Role</td>
+                        <td>@record.TimeIn</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

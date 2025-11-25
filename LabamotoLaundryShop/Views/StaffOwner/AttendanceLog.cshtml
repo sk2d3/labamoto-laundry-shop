@@ -1,0 +1,216 @@
+﻿@model List<LabamotoLaundryShop.Models.AttendanceRecord>
+
+@{
+    ViewBag.Title = "Attendance Log";
+    Layout = "~/Views/Shared/_OwnerLayout.cshtml";
+}
+
+<style>
+    .page-title {
+        font-size: 26px;
+        font-weight: 700;
+        color: #0d6efd;
+        margin-bottom: 20px;
+    }
+
+    .panel {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 25px 35px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+        margin-bottom: 25px;
+    }
+
+    .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+    }
+
+        .panel-header h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
+        }
+
+    .table thead {
+        background-color: #0d6efd;
+        color: white;
+    }
+
+    .filter-section {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+        .filter-section label {
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+    .summary-cards {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+    }
+
+    .summary-card {
+        flex: 1;
+        min-width: 120px;
+        background: #f8f9fc;
+        border-radius: 8px;
+        padding: 10px 15px;
+        text-align: center;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+        border: 1px solid #e6e6e6;
+        margin-bottom: 8px;
+    }
+
+    .action-panel {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .table tbody tr:hover {
+        background-color: rgba(13, 110, 253, 0.05);
+    }
+</style>
+
+<div class="page-title">🕒 Attendance Log & Time Tracking</div>
+
+<div class="panel">
+
+    <!-- Header -->
+    <div class="panel-header">
+        <h2>Attendance Records</h2>
+        <a href="@Url.Action("Index", "StaffOwner")" class="btn btn-danger btn-sm" style="font-size: 18px;">&times;</a>
+    </div>
+
+    <!-- Filters -->
+    <form method="get" style="width: 100%;">
+        <div class="filter-section" style="display: flex; gap: 15px; flex-wrap: wrap; width: 100%; justify-content: space-between;">
+            <!-- Date Range -->
+            <div style="display: flex; flex-direction: column; flex: 1;">
+                <label>Date Range:</label>
+                <div style="display: flex; gap: 5px;">
+                    <input type="date" name="startDate" class="form-control" value="@Request.QueryString["startDate"]" style="flex:1;">
+                    <input type="date" name="endDate" class="form-control" value="@Request.QueryString["endDate"]" style="flex:1;">
+                </div>
+            </div>
+
+            <!-- Staff Member -->
+            <div style="display: flex; flex-direction: column; flex: 1;">
+                <label>Staff Member:</label>
+                <select name="staffName" class="form-select" style="width: 100%;">
+                    <option value="">All Staff</option>
+                    @foreach (var s in Model.Select(r => r.Name).Distinct())
+                    {
+                        <option value="@s" @(Request.QueryString["staffName"] == s ? "selected" : "")>@s</option>
+                    }
+                </select>
+            </div>
+
+            <!-- Status -->
+            <div style="display: flex; flex-direction: column; flex: 1;">
+                <label>Status:</label>
+                <select name="status" class="form-select" style="width: 100%;">
+                    <option value="">All</option>
+                    <option value="Present" @(Request.QueryString["status"] == "Present" ? "selected" : "")>Present</option>
+                    <option value="Late" @(Request.QueryString["status"] == "Late" ? "selected" : "")>Late</option>
+                    <option value="Absent" @(Request.QueryString["status"] == "Absent" ? "selected" : "")>Absent</option>
+                    <option value="On Leave" @(Request.QueryString["status"] == "On Leave" ? "selected" : "")>On Leave</option>
+                </select>
+            </div>
+
+            <!-- Filter Button -->
+            <div style="display: flex; flex-direction: column; justify-content: flex-end;">
+                <button type="submit" class="btn btn-primary mt-4">Filter</button>
+            </div>
+        </div>
+    </form>
+
+
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+        <div class="summary-card">
+            <div>5 / 7</div>
+            <small>Present Today</small>
+        </div>
+        <div class="summary-card">
+            <div>2</div>
+            <small>Late Check-ins</small>
+        </div>
+        <div class="summary-card">
+            <div>0</div>
+            <small>Absent Today</small>
+        </div>
+        <div class="summary-card">
+            <div>2</div>
+            <small>On Leave</small>
+        </div>
+    </div>
+
+
+
+    <!-- Attendance Table -->
+    <div class="table-responsive">
+        <table class="table table-hover align-middle text-center border mb-4">
+            <thead class="table-light">
+                <tr>
+                    <th>Date</th>
+                    <th>Staff Name</th>
+                    <th>Check In</th>
+                    <th>Check Out</th>
+                    <th>Hours Worked</th>
+                    <th>Status</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var record in Model)
+                    {
+                        var hoursWorked = record.TimeOut.HasValue ? (record.TimeOut.Value - record.TimeIn).TotalHours : 0;
+                        <tr>
+                            <td>@record.TimeIn.ToString("MMM d")</td>
+                            <td>@(record.Name ?? "-")</td>
+                            <td>@record.TimeIn.ToString("h:mm tt")</td>
+                            <td>@(record.TimeOut?.ToString("h:mm tt") ?? "-")</td>
+                            <td>@(hoursWorked > 0 ? hoursWorked.ToString("0.##") : "-")</td>
+                            <td>@(record.Status ?? "-")</td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-muted">No attendance records found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <!-- Action Buttons -->
+    <div class="action-panel">
+        <div class="action-panel">
+            <button class="btn btn-success" onclick="location.href='@Url.Action("ExportAttendance", "StaffOwner")'">📥 Export to Excel</button>
+
+            <a href="@Url.Action("PrintAttendanceLog", "StaffOwner", new { startDate = Request.QueryString["startDate"], endDate = Request.QueryString["endDate"], staffName = Request.QueryString["staffName"], status = Request.QueryString["status"] })" class="btn btn-secondary">🖨️ Print Report</a>
+
+
+            <a href="@Url.Action("ManualAttendanceEntry", "StaffOwner")" class="btn btn-primary">➕ Manual Entry</a>
+        </div>
+    </div>
+</div>

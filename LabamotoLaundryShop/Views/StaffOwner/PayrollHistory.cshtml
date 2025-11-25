@@ -1,0 +1,158 @@
+﻿@model List<LabamotoLaundryShop.Models.PayrollRecord>
+
+@{
+    ViewBag.Title = "Payroll History";
+    Layout = "~/Views/Shared/_OwnerLayout.cshtml";
+    var totalGross = Model.Sum(r => r.GrossPay);
+    var totalDeductions = Model.Sum(r => r.Deductions);
+    var totalNet = Model.Sum(r => r.NetPay);
+}
+
+<style>
+    .container-fluid {
+        
+    }
+
+    .payroll-panel {
+        max-width: 1260px;
+        padding: 30px 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        background-color: #f9f9f9;
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+    }
+
+        .panel-header h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
+        }
+
+    .payment-summary {
+        background-color: #fff;
+        border-radius: 6px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    .table th, .table td {
+        white-space: nowrap;
+    }
+
+    @@media (max-width: 768px) {
+        .payroll-panel {
+            padding: 10px;
+        }
+    }
+    
+</style>
+
+<div class="container-fluid payroll-panel px-3 py-3">
+    <div class="panel-header d-flex justify-content-between align-items-center mb-3">
+        <h2>📋 Payroll History</h2>
+        <a href="@Url.Action("Index", "StaffOwner")" class="btn btn-danger btn-sm" style="font-size: 18px;">&times;</a>
+    </div>
+
+    <!-- Responsive Table -->
+    <div class="table-responsive mb-3">
+        <table class="table table-hover align-middle text-center border mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Employee</th>
+                    <th>Role</th>
+                    <th>Rate</th>
+                    <th>Days</th>
+                    <th>Base Pay</th>
+                    <th>OT</th>
+                    <th>Bonus</th>
+                    <th>Gross</th>
+                    <th>Deduct.</th>
+                    <th>Net Pay</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var r in Model)
+                    {
+                        <tr>
+                            <td>@r.Name</td>
+                            <td>@r.Role</td>
+                            <td>@r.Rate.ToString("C")/day</td>
+                            <td>@r.DaysWorked</td>
+                            <td>@r.BasePay.ToString("C")</td>
+                            <td>@r.OvertimePay.ToString("C")</td>
+                            <td>@r.Bonus.ToString("C")</td>
+                            <td>@r.GrossPay.ToString("C")</td>
+                            <td>@r.Deductions.ToString("C")</td>
+                            <td>@r.NetPay.ToString("C")</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#viewPayrollModal-@r.PayrollID">
+                                    👁️ View
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="11" class="text-muted">No payroll records found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Payment Summary -->
+    <div class="payment-summary border p-3 mt-3">
+        <h6>💳 Payment Summary</h6>
+        <div class="d-flex justify-content-between"><span>Total Gross:</span><span>₱@totalGross.ToString("N0")</span></div>
+        <div class="d-flex justify-content-between"><span>Total Deductions:</span><span>-₱@totalDeductions.ToString("N0")</span></div>
+        <hr />
+        <div class="d-flex justify-content-between fw-bold"><span>Net Payable:</span><span>₱@totalNet.ToString("N0")</span></div>
+    </div>
+</div>
+
+<!-- Modals outside table -->
+@foreach (var r in Model)
+{
+    <div class="modal fade" id="viewPayrollModal-@r.PayrollID" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Payroll Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-start">
+                    <p><strong>Employee:</strong> @r.Name</p>
+                    <p><strong>Role:</strong> @r.Role</p>
+                    <p><strong>Rate:</strong> @r.Rate.ToString("C")/day</p>
+                    <p><strong>Days Worked:</strong> @r.DaysWorked</p>
+                    <p><strong>Base Pay:</strong> @r.BasePay.ToString("C")</p>
+                    <p><strong>Overtime Pay:</strong> @r.OvertimePay.ToString("C")</p>
+                    <p><strong>Bonus:</strong> @r.Bonus.ToString("C")</p>
+                    <p><strong>Gross:</strong> @r.GrossPay.ToString("C")</p>
+                    <p><strong>Deductions:</strong> @r.Deductions.ToString("C")</p>
+                    <p><strong>Net Pay:</strong> @r.NetPay.ToString("C")</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

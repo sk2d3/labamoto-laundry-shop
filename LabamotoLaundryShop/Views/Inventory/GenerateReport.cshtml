@@ -1,0 +1,347 @@
+﻿@model List<LabamotoLaundryShop.Models.InventoryItem>
+
+@{
+    Layout = "~/Views/Shared/_OwnerLayout.cshtml";
+
+    // Compute summary stats dynamically
+    decimal totalInventoryValue = Model.Sum(i => i.CurrentStock * i.UnitCost);
+    decimal monthlyUsageCost = Model.Sum(i => (i.MinLevel / 30) * 30 * i.UnitCost);
+    int lowStockItems = Model.Count(i => i.Status == "Low");
+    int outOfStockItems = Model.Count(i => i.Status == "OUT");
+
+    // Top 5 most used items based on MinLevel
+    var topUsedItems = Model.OrderByDescending(i => i.MinLevel).Take(5).ToList();
+
+    // Cost breakdown by category
+    var costByCategory = Model
+        .GroupBy(i => i.Category)
+        .Select(g => new { Category = g.Key, Total = g.Sum(x => x.MinLevel * x.UnitCost) })
+        .ToList();
+}
+
+@if (ViewBag.PrintMode == true)
+{
+    <script>
+        window.onload = function () {
+            window.print();
+        }
+    </script>
+
+    <style>
+        /* Optional: hide buttons when printing */
+        .btn-group-report,
+        .navbar,
+        .footer,
+        .card-header {
+            display: none !important;
+        }
+    </style>
+}
+<style>
+    h2 {
+        color: #0d6efd;
+        font-weight: 600;
+        font-size: 25px;
+        margin-bottom: 15px;
+    }
+
+    .card {
+        max-width: 1250px;
+        margin: 20px auto;
+        padding: 30px 40px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    .card-header {
+        background-color: #fff;
+        color: #0d6efd;
+        font-weight: 600;
+        font-size: 18px;
+        border: 1px solid #e0e7ff;
+        margin-bottom: 20px;
+    }
+
+    .summary-box {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        border-left: 5px solid #0d6efd;
+        text-align: center;
+    }
+
+    .summary-value {
+        font-size: 21px;
+        color: #0d6efd;
+    }
+
+    .summary-label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #6c757d;
+    }
+
+    .table thead {
+        background-color: #0d6efd;
+        color: white;
+    }
+
+    .table tbody tr:hover {
+        background-color: rgba(13, 110, 253, 0.1);
+    }
+
+    .section-title {
+        font-weight: 600;
+        color: #0d6efd;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        font-size: 20px;
+    }
+
+    .btn-group-report .btn {
+        margin-right: 10px;
+    }
+</style>
+
+<div class="mb-3">
+    
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="mb-3 card-header d-flex justify-content-between align-items-center">
+        <span style="font-size: 21px; font-weight: 600;">
+            📊 Inventory Analytics Report
+        </span>
+
+        <a href="@Url.Action("Index", "Inventory")" class="custom-link" style="text-decoration: none; color: red; font-size: 30px;">
+            &times;
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    <div class="card-body">
+
+        <!-- FILTER FORM -->
+        <form method="get" action="@Url.Action("GenerateReport", "Inventory")" class="row g-3 mb-4 align-items-end">
+            <div class="col-md-3">
+                <label for="period" class="form-label">Report Period (Days)</label>
+                <input type="number" class="form-control" id="period" name="period" value="@ViewBag.SelectedPeriod" min="1">
+            </div>
+            <div class="col-md-3">
+                <label for="type" class="form-label">Report Type</label>
+                <select class="form-select" id="type" name="type">
+                    <option value="full" @(ViewBag.SelectedType == "full" ? "selected" : "")>Full Inventory Report</option>
+                    <option value="summary" @(ViewBag.SelectedType == "summary" ? "selected" : "")>Summary Only</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="category" class="form-label">Category</label>
+                <select class="form-select" id="category" name="category">
+                    <option value="">All Categories</option>
+                    @foreach (var cat in ViewBag.Categories as List<string>)
+                    {
+                        <option value="@cat" @(ViewBag.SelectedCategory == cat ? "selected" : "")>@cat</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary w-100">Generate</button>
+            </div>
+        </form>
+
+        <!-- SUMMARY BOXES (always show) -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="summary-box" style="box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                    <div class="summary-label">Total Inventory Value</div>
+                    <div class="summary-value">₱@totalInventoryValue.ToString("N2")</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="summary-box" style="box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                    <div class="summary-label">Monthly Usage Cost</div>
+                    <div class="summary-value">₱@monthlyUsageCost.ToString("N2")</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="summary-box" style="box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                    <div class="summary-label">Low Stock Items</div>
+                    <div class="summary-value">@lowStockItems</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="summary-box" style="box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                    <div class="summary-label">Out of Stock</div>
+                    <div class="summary-value">@outOfStockItems</div>
+                </div>
+            </div>
+        </div>
+
+        @* FULL INVENTORY REPORT SECTION *@
+        @if (ViewBag.SelectedType == "full")
+        {
+            <!-- STOCK LEVEL SUMMARY -->
+            <div class="section-title text-black">Stock Level Summary</div>
+            <div class="table-responsive mb-4">
+                <table class="table table-hover align-middle text-center border">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Item</th>
+                            <th>Current Stock</th>
+                            <th>Usage (30d)</th>
+                            <th>Cost/Unit</th>
+                            <th>Total Value</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.ItemName</td>
+                                <td>@item.CurrentStock @item.Unit</td>
+                                <td>@item.MinLevel @item.Unit</td>
+                                <td>₱@item.UnitCost.ToString("N2")</td>
+                                <td>₱@((item.CurrentStock * item.UnitCost).ToString("N2"))</td>
+                                <td>
+                                    @if (item.Status == "OK")
+                                    {<span class="badge bg-success">OK</span>}
+                                    else if (item.Status == "Low")
+                                    {<span class="badge bg-warning text-dark">Low</span>}
+                                    else
+                                    {<span class="badge bg-danger">OUT</span>}
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- TOP 5 ITEMS & COST BREAKDOWN SIDE BY SIDE -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-6 d-flex">
+                    <!-- TOP 5 MOST USED ITEMS -->
+                    <div class="card shadow-sm border-0 flex-fill">
+                        <div class="card-body d-flex flex-column h-100">
+                            <div class="mb-3 fw-bold" style="font-size: 21px; color: #0d6efd;">Top 5 Most Used Items</div>
+                            @foreach (var top in topUsedItems)
+                            {
+                                <div class="d-flex justify-content-between align-items-start border-bottom py-2">
+                                    <div class="fw-bold">@top.ItemName</div>
+                                    <div class="text-end">
+                                        <div>Usage: @top.MinLevel @top.Unit</div>
+                                        <div>Cost: ₱@((top.MinLevel * top.UnitCost).ToString("N2"))</div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex">
+                    <!-- COST BREAKDOWN -->
+                    <div class="card shadow-sm border-0 flex-fill">
+                        <div class="card-body d-flex flex-column h-100">
+                            <div class="mb-3 fw-bold" style="font-size: 21px; color: #0d6efd;">Cost Breakdown (Last 30 Days)</div>
+                            @foreach (var cat in costByCategory)
+                            {
+                                <div class="d-flex justify-content-between align-items-start border-bottom py-2">
+                                    <div>@cat.Category:</div>
+                                    <div class="text-end">₱@cat.Total.ToString("N2")</div>
+                                </div>
+                            }
+                            <div class="d-flex justify-content-between align-items-start border-bottom py-2">
+                                <div><strong>Total Usage Cost:</strong></div>
+                                <div class="text-end"><strong>₱@monthlyUsageCost.ToString("N2")</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- EXPORT + PRINT + EMAIL -->
+        <div class="mt-3 text-end btn-group-report">
+            <a href="@Url.Action("ExportExcel", "Inventory", new { category = ViewBag.SelectedCategory })"
+               class="btn btn-outline-success">📥 Export Full Report (Excel)</a>
+
+            <a href="@Url.Action("PrintPDF", "Inventory",
+    new { period = ViewBag.SelectedPeriod, type = ViewBag.SelectedType, category = ViewBag.SelectedCategory })"
+               class="btn btn-outline-dark">
+                🖨️ Print Report (PDF)
+            </a>
+
+            <a href="javascript:void(0);"
+               class="btn btn-outline-primary"
+               data-bs-toggle="modal"
+               data-bs-target="#emailReportModal">📧 Email Report</a>
+
+            <a href="@Url.Action("GenerateReport", "Inventory", new { period = ViewBag.SelectedPeriod, type = ViewBag.SelectedType, category = ViewBag.SelectedCategory, charts = true })"
+               class="btn btn-outline-info">📊 View Charts & Graphs</a>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="emailReportModal" tabindex="-1" aria-labelledby="emailReportModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="emailReportForm" method="post" action="@Url.Action("EmailReport", "Inventory")">
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title" id="emailReportModalLabel">Send Inventory Report via Email</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="recipientEmail" class="form-label">Recipient Email</label>
+                                <input type="email" class="form-control" id="recipientEmail" name="recipientEmail" placeholder="Enter email" required>
+                            </div>
+
+                            <!-- Hidden fields to pass report filters -->
+                            <input type="hidden" name="period" value="@ViewBag.SelectedPeriod" />
+                            <input type="hidden" name="type" value="@ViewBag.SelectedType" />
+                            <input type="hidden" name="category" value="@ViewBag.SelectedCategory" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Send Email</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#emailReportForm').submit(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: "POST",
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function () {
+                    alert('✅ Email sent successfully!');
+                    $('#emailReportModal').modal('hide');
+                },
+                error: function (xhr) {
+                    alert('⚠️ Failed to send email: ' + xhr.responseText);
+                }
+            });
+        });
+    });
+</script>

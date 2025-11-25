@@ -1,0 +1,213 @@
+﻿@model IEnumerable<LabamotoLaundryShop.Models.WeeklySchedule>
+
+@{
+    ViewBag.Title = "View Schedules";
+    Layout = "~/Views/Shared/_OwnerLayout.cshtml";
+}
+
+<style>
+    .page-title {
+        font-size: 26px;
+        font-weight: 700;
+        color: #0d6efd;
+        margin-bottom: 20px;
+    }
+
+    .panel {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 25px 35px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+        margin-bottom: 25px;
+    }
+
+    .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+    }
+
+        .panel-header h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
+        }
+
+    .table thead {
+        background-color: #0d6efd;
+        color: white;
+    }
+
+    .week-bar {
+        background: #f8f9fc;
+        border-radius: 8px;
+        padding: 12px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        border: 1px solid #e6e6e6;
+    }
+
+        .week-bar span {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+    .action-panel {
+        background: #f8f9fc;
+        padding: 15px 20px;
+        border-radius: 8px;
+        border: 1px solid #eaeaea;
+        margin-top: 20px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+    }
+
+    .loading-spinner {
+        display: none;
+        margin-left: 8px;
+    }
+
+    button.loading {
+        pointer-events: none;
+        opacity: 0.7;
+    }
+</style>
+
+<div class="page-title">📅 Staff Schedule Management</div>
+
+<div class="panel">
+
+    <!-- Header -->
+    <div class="panel-header">
+        <h2>Weekly Schedule Overview</h2>
+        <a href="@Url.Action("Index", "StaffOwner")" class="btn btn-danger btn-sm" style="font-size: 18px;">&times;</a>
+    </div>
+
+    <!-- Week Navigator -->
+    <div class="week-bar">
+        <a href="@Url.Action("ViewSchedules", new { weekOffset = ViewBag.WeekOffset - 1 })"
+           class="btn btn-outline-primary btn-sm">← Previous Week</a>
+
+        <span>Week of @ViewBag.WeekStart.ToString("MMM d") – @ViewBag.WeekEnd.ToString("MMM d, yyyy")</span>
+
+        <a href="@Url.Action("ViewSchedules", new { weekOffset = ViewBag.WeekOffset + 1 })"
+           class="btn btn-outline-primary btn-sm">Next Week →</a>
+    </div>
+
+    <!-- Schedule Table -->
+    <div class="table-responsive">
+        <table class="table table-hover align-middle text-center border">
+            <thead class="table-light">
+                <tr>
+                    <th>Staff Member</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                    <th>Sun</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var staff in Model)
+                {
+                    <tr>
+                        <td>@staff.StaffName - @staff.Role</td>
+                        <td>@(string.IsNullOrEmpty(staff.Mon) ? "OFF" : staff.Mon)</td>
+                        <td>@(string.IsNullOrEmpty(staff.Tue) ? "OFF" : staff.Tue)</td>
+                        <td>@(string.IsNullOrEmpty(staff.Wed) ? "OFF" : staff.Wed)</td>
+                        <td>@(string.IsNullOrEmpty(staff.Thu) ? "OFF" : staff.Thu)</td>
+                        <td>@(string.IsNullOrEmpty(staff.Fri) ? "OFF" : staff.Fri)</td>
+                        <td>@(string.IsNullOrEmpty(staff.Sat) ? "OFF" : staff.Sat)</td>
+                        <td>@(string.IsNullOrEmpty(staff.Sun) ? "OFF" : staff.Sun)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Alerts -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show mt-3">
+            @TempData["SuccessMessage"]
+            <button class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show mt-3">
+            @TempData["ErrorMessage"]
+            <button class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Action Buttons Panel -->
+    <div class="action-panel">
+
+        <!-- Copy Next Week -->
+        <form method="post" action="@Url.Action("CopyScheduleNextWeek", "StaffOwner")">
+            <button type="submit" class="btn btn-outline-primary">
+                📋 Copy to Next Week
+                <span class="loading-spinner spinner-border spinner-border-sm"></span>
+            </button>
+        </form>
+
+        <!-- Export -->
+        <a href="@Url.Action("ExportSchedule", "StaffOwner")" class="btn btn-outline-success">
+            📤 Export CSV
+        </a>
+
+        <!-- Send Schedule -->
+        <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#confirmSendModal">
+            📨 Send to Staff
+        </button>
+    </div>
+
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmSendModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Send Schedule</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                Send weekly schedule to <strong>all staff?</strong>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                <form method="post" action="@Url.Action("SendSchedule", "StaffOwner")">
+                    <button type="submit" class="btn btn-info text-white">
+                        Yes, send now
+                        <span class="loading-spinner spinner-border spinner-border-sm"></span>
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll("form button[type='submit']").forEach(btn => {
+        btn.addEventListener("click", function () {
+            btn.classList.add("loading");
+            btn.querySelector(".loading-spinner").style.display = "inline-block";
+        });
+    });
+</script>
